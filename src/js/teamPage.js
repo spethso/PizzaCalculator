@@ -118,12 +118,35 @@ window.addEventListener('load', () => {
     suggestions = getAllSuggestions();
 
     suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
+    // multiplied by two, because here we work with half pizzas
+    amount = getAmount() * 2;
+    counter = 0;
     
     suggestions.forEach(function(element) {
+
+        success = false;
+        if (counter < amount) {
+            success = true;
+        }
+        counter++;
+
         $('#panelContainer')
-            .append(generateSuggestionPanel(element.id, "Hälfte " + element.id, element.vote, true, element.ingredients));
+            .append(generateSuggestionPanel(element.id, "Hälfte " + element.id, element.vote, success, element.ingredients));
     });
     
     //$('#panelContainer')
       //  .append(generateSuggestionPanel(501, "Hälfte 1", 33, true, ["Thunfisch", "Salami", "Honig"]))
 })
+
+function getAmount(){
+    let amount;
+    $.ajax({
+        url: '/pizzas/amount/?teamname='+getTeamname(),
+        success: (res) => {
+            amount = JSON.parse(res);
+        },
+        method: "GET",
+        async: false
+    })
+    return amount.amount
+}
