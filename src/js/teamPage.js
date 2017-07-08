@@ -41,6 +41,81 @@ function getAllSuggestions(){
     return suggestions
 }
 
+/**
+ * Generate DOM structure for a pizza topping suggestion
+ * @param id suggestion ID assigned by the backend for this suggestion
+ * @param headingText text to be displayed in header of the suggestion
+ * @param voteCount number of votes this suggestion has already received
+ * @param success {boolean} whether this topping is currently successful and will be chose
+ * @param ingredients list of ingredients used as pizza topping suggestion
+ * @returns {*|jQuery}
+ */
+function generateSuggestionPanel(id, headingText, voteCount, success, ingredients){
+    const ingredientsList = ingredients
+        .reduce((acc, val) => {
+            return acc + val + "<br>"
+        }, "")
+    const $headingRow = $('<div></div>')
+        .addClass('row');
+    const $h4 = $('<h4></h4>')
+    const $panelHeadingText = $('<div></div>')
+        .addClass('col-sm-6');
+    const $panelHeadingVote = $('<div></div>')
+        .addClass('col-sm-6')
+    const $elementGroup = $('<div></div>')
+        .addClass('element-group')
+
+                                const $posButton = $('<button></button>')
+                                    .attr('type', 'button')
+                                    .addClass('btn btn-success btn-xs')
+                                    .text('+')
+                                const $voteCount = $('<span></span>')
+                                    .addClass('label label-default label-sm')
+                                    .text(voteCount)
+                                const $negButton = $('<button></button>')
+                                    .attr('type', 'button')
+                                    .addClass('btn btn-danger btn-xs')
+                                    .text('-')
+
+                            const $voteComponent = $($elementGroup)
+                                .append($posButton)
+                                .append($voteCount)
+                                .append($negButton)
+
+                        const $voteColumn = $($panelHeadingVote)
+                            .append($voteComponent)
+
+                        const $headingTextColumn = $($panelHeadingText)
+                            .text(headingText)
+
+                    const $header = $($h4)
+                        .append($headingTextColumn)
+                        .append($voteColumn)
+
+                const $completeHeadingRow = $($headingRow)
+                    .append($header)
+
+            const $panelHeading = $('<div></div>')
+                .addClass('panel-heading')
+                .append($completeHeadingRow)
+
+            const $panelBody = $('<div></div>')
+                .addClass('panel-body')
+                .html(ingredientsList.slice(0, -4))
+
+        const $panel = $('<div></div>')
+            .addClass('panel ' + ((success)? 'panel-success' : 'panel-danger'))
+            .append($panelHeading)
+            .append($panelBody)
+
+    const $panelColumn = $('<div></div>')
+        .addClass('col-sm-4')
+        .attr('suggestion-id', id)
+        .append($panel)
+
+    return $panelColumn;
+}
+
 window.addEventListener('load', () => {
     updateTeamname()
 })
