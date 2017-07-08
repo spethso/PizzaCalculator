@@ -160,6 +160,7 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
     let vote = parseInt(req.body.vote);
     if (teamname != undefined && suggestion_id != NaN && vote != NaN && team_suggestions.has(teamname)) {
         console.log('Update vote vor suggestion');
+        vote = Math.sign(vote);
         team_suggestions.get(teamname)[suggestion_id].vote += vote;
         res.sendStatus(200);
     } else {
