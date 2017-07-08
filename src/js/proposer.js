@@ -61,6 +61,7 @@ function submitProposal(){
         },
         success: () => {
             console.log("Your ingredients have been proposed.")
+            window.location.reload(true);
         }
     })
 }
