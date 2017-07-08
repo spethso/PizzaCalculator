@@ -90,6 +90,7 @@ app.get('/pizzas/suggest', function (req, res) {
     res.status(200).sendFile(__dirname + '/proposer.html');
 });
 
+// TODO in swagger eintragen
 app.get('/teamdata', function (req, res) {
     let teamname = req.query.teamname;
     if (teamname != undefined && teams.has(teamname)) {
@@ -101,7 +102,7 @@ app.get('/teamdata', function (req, res) {
 
 app.post('/sessioncreate/', function (req, res) {
     let teamname = req.body.teamname;
-    if (teamname != undefined && teams.has(teamname) && team_suggestions.has(teamname)) {
+    if (teamname != undefined && !teams.has(teamname) && !team_suggestions.has(teamname)) {
         console.log('Creating team ' + teamname);
         let data = {
             teamsize: {
