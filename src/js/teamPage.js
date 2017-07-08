@@ -50,8 +50,25 @@ function vote(value, id){
         data: voteObject,
         success: () => {
             console.log("Your vote has been sent to the server.")
-        }
+        },
+        method: "POST"
     })
+}
+
+function voteHandler(event){
+    const $eventTarget = event.target;
+    const suggestionID = $(event.target).parent().parent().parent().parent().parent().parent().parent().attr('suggestion-id');
+    if($($eventTarget).hasClass('btn-success')
+            && window.localStorage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'positive'){
+        //Send & save positive vote
+        vote(1, suggestionID);
+        window.localStorage.setItem('voted_for_suggestion_id_' + suggestionID, 'positive');
+    } else if($($eventTarget).hasClass('btn-danger')
+            && window.localStorage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'negative'){
+        //Send & save negative vote
+        vote(-1, suggestionID);
+        window.localStorage.setItem('voted_for_suggestion_id_' + suggestionID, 'negative');
+    }
 }
 
 /**
