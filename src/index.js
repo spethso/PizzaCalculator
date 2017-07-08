@@ -10,7 +10,7 @@ var js_files = [];
 
 js_files.forEach(function (filename) {
     app.get('/js/' + filename, function (req, res) {
-        res.sendFile(__dirname + '/js/' + filename + '.js');
+        res.sendFile(__dirname + '/js/' + filename);
     });
 });
 
@@ -49,6 +49,7 @@ app.post('/teams/teamsize/', function (req, res) {
     let teamname = req.body.teamname;
     if (count != undefined && type != undefined && teamname != undefined) {
         console.log('Update team size for team' + teamname);
+        // TODO calc pizza number and add to data
         let data = {
             teamsize: {
                 number: count,
@@ -57,14 +58,16 @@ app.post('/teams/teamsize/', function (req, res) {
         };
         teams.set(teamname, data);
         res.redirect(302, '/teams/?teamname=' + teamname);
-        res.status(200).end(JSON.stringify({ teamname: teamname, TODO }));
+        res.status(200).end(JSON.stringify({ teamname: teamname, data : data }));
     } else {
         console.log('Update team size failed');
         res.sendStatus(400);
     }
 });
 
-
+function computeNumberOfPizzas(number, type) {
+    return 4; // TODO
+};
 
 function saveToFile(data, filename = "tfmap.log", exitOnWrite = false) {
     let folderName = "results";
