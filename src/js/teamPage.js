@@ -137,6 +137,10 @@ window.addEventListener('load', () => {
     // multiplied by two, because here we work with half pizzas
     amount = getAmount() * 2;
     counter = 0;
+
+    teamdata = getTeamdata();
+    document.getElementById("count").value = teamdata.teamsize.number;
+    document.getElementById("type").value = teamdata.teamsize.type;
     
     suggestions.forEach(function(element) {
 
@@ -149,9 +153,6 @@ window.addEventListener('load', () => {
         $('#panelContainer')
             .append(generateSuggestionPanel(element.id, "Vorschlag " + element.id, element.vote, success, element.ingredients));
     });
-    
-    //$('#panelContainer')
-      //  .append(generateSuggestionPanel(501, "Hälfte 1", 33, true, ["Thunfisch", "Salami", "Honig"]))
 })
 
 function getAmount(){
@@ -165,4 +166,17 @@ function getAmount(){
         async: false
     })
     return amount.amount
+}
+
+function getTeamdata(){
+    let data;
+    $.ajax({
+        url: '/teamdata/?teamname='+getTeamname(),
+        success: (res) => {
+            data = JSON.parse(res);
+        },
+        method: "GET",
+        async: false
+    })
+    return data
 }
