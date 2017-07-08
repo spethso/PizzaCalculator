@@ -130,7 +130,7 @@ app.post('/pizzas/suggestions', function (req, res) {
         let suggestion = {
             id: team_suggestions.get(teamname).length,
             ingredients: ingredients,
-            vote: 1
+            vote: 0
         };
         team_suggestions.get(teamname).push(suggestion);
         res.end(JSON.stringify(suggestion));
