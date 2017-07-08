@@ -147,7 +147,7 @@ window.addEventListener('load', () => {
         counter++;
 
         $('#panelContainer')
-            .append(generateSuggestionPanel(element.id, "Hälfte " + element.id, element.vote, success, element.ingredients));
+            .append(generateSuggestionPanel(element.id, "Vorschlag " + element.id, element.vote, success, element.ingredients));
     });
     
     //$('#panelContainer')
