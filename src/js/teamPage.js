@@ -28,12 +28,9 @@ function updateTeamname(){
 function getAllSuggestions(){
     let suggestions;
     $.ajax({
-        url: '/pizzas/suggestions',
-        data: {
-            teamname: getTeamname()
-        },
-        success: (data) => {
-            suggestions = JSON.parse(data);
+        url: '/pizzas/suggestions/?teamname='+getTeamname(),
+        success: (res) => {
+            suggestions = JSON.parse(res);
         },
         method: "GET",
         async: false
@@ -118,6 +115,15 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
 
 window.addEventListener('load', () => {
     updateTeamname();
-    $('#panelContainer')
-        .append(generateSuggestionPanel(501, "Hälfte 1", 33, true, ["Thunfisch", "Salami", "Honig"]))
+    suggestions = getAllSuggestions();
+
+    suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
+    
+    suggestions.forEach(function(element) {
+        $('#panelContainer')
+            .append(generateSuggestionPanel(element.id, "Hälfte " + element.id, element.vote, true, element.ingredients));
+    });
+    
+    //$('#panelContainer')
+      //  .append(generateSuggestionPanel(501, "Hälfte 1", 33, true, ["Thunfisch", "Salami", "Honig"]))
 })
