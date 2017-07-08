@@ -150,17 +150,20 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
 
 window.addEventListener('load', () => {
     updateTeamname();
-    suggestions = getAllSuggestions();
 
-    suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
     // multiplied by two, because here we work with half pizzas
     amount = getAmount() * 2;
     counter = 0;
 
     teamdata = getTeamdata();
     document.getElementById("count").value = teamdata.teamsize.number;
-    document.getElementById("type").value = teamdata.teamsize.type;
+
+    if (teamdata.teamsize.type != null){
+        document.getElementById("type").value = teamdata.teamsize.type;
+    }
     
+    suggestions = getAllSuggestions();
+    suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
     suggestions.forEach(function(element) {
 
         success = false;
