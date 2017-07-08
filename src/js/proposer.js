@@ -26,6 +26,7 @@ function getCheckboxForIngredient(ingredient){
         .attr('for', 'checkbox' + ingredient)
         .text(ingredient)
     return $('<div></div>')
+        .addClass("checkbox")
         .append($inputElement)
         .append($label)
 }
