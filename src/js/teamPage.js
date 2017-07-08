@@ -69,6 +69,7 @@ function voteHandler(event){
         vote(-1, suggestionID);
         window.localStorage.setItem('voted_for_suggestion_id_' + suggestionID, 'negative');
     }
+    window.location.reload(true);
 }
 
 /**
