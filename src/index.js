@@ -57,8 +57,8 @@ app.get('/teams', function (req, res) {
 });
 
 app.get('/pizzas/amount', function (req, res) {
-    let teamname = req.body.teamname;
-    if (teamname != undefined) {
+    let teamname = req.query.teamname;
+    if (teamname != undefined && teams.has(teamname)) {
         let amount = {
             amount: teams.get(teamname).pizza_count
         };
@@ -78,13 +78,10 @@ app.get('/pizzas/ingredients', function (req, res) {
 
 app.get('/pizzas/suggestions', function (req, res) {
     let teamname = req.query.teamname;
-    console.log(teamname);
-    if (teamname != undefined) {
-        console.log("true");
+    if (teamname != undefined && team_suggestions.has(teamname)) {
         let suggestions = team_suggestions.get(teamname);
         res.status(200).end(JSON.stringify(suggestions));
     } else {
-        console.log(req.body);
         res.sendStatus(400);
     }
 });
@@ -142,7 +139,7 @@ app.post('/teams/teamsize/', function (req, res) {
 app.post('/pizzas/suggestions', function (req, res) {
     let teamname = req.body.teamname;
     let ingredients = req.body.ingredients;
-    if (teamname != undefined && ingredients.length > 0) {
+    if (teamname != undefined && ingredients.length > 0 && team_suggestions.has(teamname)) {
         console.log('Add suggestion for team ' + teamname);
         let suggestion = {
             id: team_suggestions.get(teamname).length,
@@ -161,7 +158,7 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
     let teamname = req.body.teamname;
     let suggestion_id = parseInt(req.body.id);
     let vote = parseInt(req.body.vote);
-    if (teamname != undefined && suggestion_id != NaN && vote != NaN) {
+    if (teamname != undefined && suggestion_id != NaN && vote != NaN && team_suggestions.has(teamname)) {
         console.log('Update vote vor suggestion');
         team_suggestions.get(teamname)[suggestion_id].vote += vote;
         res.sendStatus(200);
