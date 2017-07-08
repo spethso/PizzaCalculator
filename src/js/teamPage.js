@@ -10,3 +10,8 @@ function retrieveGetParameters(){
         })
     return parameters;
 }
+
+function getTeamname(){
+    const parameters = retrieveGetParameters();
+    return parameters["teamname"];
+}
