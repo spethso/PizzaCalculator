@@ -8,6 +8,11 @@ const HashMap = require('hashmap');
 var teams = new HashMap();
 var js_files = [];
 
+// read all files in js subfolder and set names in js_files array
+fs.readdirSync('js').forEach(file => {
+        js_files.push(file);
+});
+
 js_files.forEach(function (filename) {
     app.get('/js/' + filename, function (req, res) {
         res.sendFile(__dirname + '/js/' + filename);
@@ -35,6 +40,7 @@ app.post('/sessioncreate/', function (req, res) {
             }
         };
         teams.set(teamname, data);
+        res.status(200).sendFile(__dirname + '/js/teamPage.js');
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname }));
     } else {
@@ -82,11 +88,6 @@ function saveToFile(data, filename = "tfmap.log", exitOnWrite = false) {
 }
 
 var server = app.listen(8081, function () {
-    // read all files in js subfolder and set names in js_files array
-    fs.readdirSync('js').forEach(file => {
-        js_files.push(file);
-    });
-
     var host = server.address().address;
     var port = server.address().port;
     console.log("REST server listening at http://%s:%s", host, port);
