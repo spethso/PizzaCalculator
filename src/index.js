@@ -107,7 +107,7 @@ app.post('/sessioncreate/', function (req, res) {
         let data = {
             teamsize: {
                 number: 0,
-                type: 'Not defined'
+                type: null
             },
             pizza_count: 0
         };
