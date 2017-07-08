@@ -7,7 +7,7 @@ const HashMap = require('hashmap');
 const dirname = fs.realpathSync('./');
 
 var teams = new HashMap();
-var bootstrap_files = [];
+var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
 
 // build api endpoint for getting js files
 fs.readdirSync(dirname + '/src/js').forEach(file => {
@@ -18,9 +18,7 @@ fs.readdirSync(dirname + '/src/js').forEach(file => {
 
 // build api endpoint for getting bootstrap files
 fs.readdirSync(dirname + '/node_modules/bootstrap/dist/css').forEach(file => {
-    console.log('/node_modules/bootstrap/dist/css/' + file);
     app.get('/css/' + file, function (req, res) {
-        console.log("Adding CSS endpoint for file " + file)
         res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/css/' + file);
     });
 });
@@ -42,6 +40,14 @@ app.get('/pizzas/amount', function (req, res) {
         res.status(200).end(JSON.stringify(amount));
     } else {
         res.sendStatus(400);
+    }
+});
+
+app.get('pizzas/ingredients', function (req, res) {
+    if (ingredients.length > 0) {
+        res.status(200).end(JSON.stringify(ingredients));
+    } else {
+        res.sendStatus(404);
     }
 });
 
