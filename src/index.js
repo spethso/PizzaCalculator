@@ -116,8 +116,8 @@ app.post('/teams/teamsize/', function (req, res) {
     let count = parseInt(req.body.count);
     let type = req.body.type;
     let teamname = req.body.teamname;
-    if (count != undefined && type != undefined && teamname != undefined) {
-        console.log('Update team size for team' + teamname);
+    if (count != NaN && type != undefined && teamname != undefined) {
+        console.log('Update team size for team ' + teamname);
         let pizza_count = computeNumberOfPizzas(count, type);
         let data = {
             teamsize: {
@@ -158,7 +158,7 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
     let teamname = req.body.teamname;
     let suggestion_id = parseInt(req.body.id);
     let vote = parseInt(req.body.vote);
-    if (teamname != undefined && suggestion_id != undefined && vote != undefined) {
+    if (teamname != undefined && suggestion_id != NaN && vote != NaN) {
         console.log('Update vote vor suggestion');
         team_suggestions.get(teamname)[suggestion_id].vote += vote;
         res.sendStatus(200);
@@ -169,7 +169,14 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
 });
 
 function computeNumberOfPizzas(count, type) {
-    return 4; // TODO
+    if (type == 'Personen') {
+        let number = count * 4;
+        return Math.ceil(number / 16);
+    } else if (type == 'Pizzastuecke') {
+        return Math.ceil(count / 16);
+    } else {
+        return 0;
+    }
 };
 
 function saveToFile(data, filename = "tfmap.log", exitOnWrite = false) {
