@@ -99,6 +99,7 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
                                     .attr('type', 'button')
                                     .addClass('btn btn-success btn-xs')
                                     .text('+')
+                                    .click(voteHandler)
                                 const $voteCount = $('<span></span>')
                                     .addClass('label label-default label-sm')
                                     .text(voteCount)
@@ -106,6 +107,7 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
                                     .attr('type', 'button')
                                     .addClass('btn btn-danger btn-xs')
                                     .text('-')
+                                    .click(voteHandler)
 
                             const $voteComponent = $($elementGroup)
                                 .append($posButton)
