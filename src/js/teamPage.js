@@ -117,5 +117,7 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
 }
 
 window.addEventListener('load', () => {
-    updateTeamname()
+    updateTeamname();
+    $('#panelContainer')
+        .append(generateSuggestionPanel(501, "Hälfte 1", 33, true, ["Thunfisch", "Salami", "Honig"]))
 })
