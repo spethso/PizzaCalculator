@@ -10,6 +10,30 @@ var teams = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
 var team_suggestions = new HashMap();
 
+// DUMMI DATA
+let i1 = {
+    id: 0,
+    ingredients: ['Salami', 'Schinken'],
+    vote: 20
+};
+let i2 = {
+    id: 1,
+    ingredients: ['Oliven', 'Schinken'],
+    vote: 2
+};
+let i3 = {
+    id: 2,
+    ingredients: ['Salami', 'Pilze', 'Oliven'],
+    vote: 0
+};
+let i4 = {
+    id: 3,
+    ingredients: ['Salami', 'Feta', 'Maultaschen', 'Speck'],
+    vote: 7
+};
+team_suggestions.set('team', [i1, i2, i3, i4]);
+// END DUMMI DATA
+
 // build api endpoint for getting js files
 fs.readdirSync(dirname + '/src/js').forEach(file => {
     app.get('/js/' + file, function (req, res) {
@@ -89,7 +113,7 @@ app.post('/sessioncreate/', function (req, res) {
 });
 
 app.post('/teams/teamsize/', function (req, res) {
-    let count = req.body.count;
+    let count = parseInt(req.body.count);
     let type = req.body.type;
     let teamname = req.body.teamname;
     if (count != undefined && type != undefined && teamname != undefined) {
@@ -102,6 +126,7 @@ app.post('/teams/teamsize/', function (req, res) {
             },
             pizza_count: pizza_count
         };
+        console.log(data);
         teams.set(teamname, data);
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname, data: data }));
@@ -113,20 +138,32 @@ app.post('/teams/teamsize/', function (req, res) {
 
 app.post('/pizzas/suggestions', function (req, res) {
     let teamname = req.body.teamname;
-    let a = '';
-    if (teamname != undefined) {
-
+    let ingredients = req.body.ingredients;
+    if (teamname != undefined && ingredients.length > 0) {
+        console.log('Add suggestion for team ' + teamname);
+        let suggestion = {
+            id: team_suggestions.get(teamname).length,
+            ingredients: ingredients,
+            vote: 1
+        };
+        team_suggestions.get(teamname).push(suggestion);
+        res.end(JSON.stringify(suggestion));
     } else {
+        console.log('Failed to add suggestion');
         res.sendStatus(400);
     }
 });
 
 app.post('/pizzas/suggestions/vote', function (req, res) {
     let teamname = req.body.teamname;
-    let suggestion_id = req.body.id;
-    if (teamname != undefined && suggestion_id != undefined) {
-        // TODO update voting
+    let suggestion_id = parseInt(req.body.id);
+    let vote = parseInt(req.body.vote);
+    if (teamname != undefined && suggestion_id != undefined && vote != undefined) {
+        console.log('Update vote vor suggestion');
+        team_suggestions.get(teamname)[suggestion_id].vote += vote;
+        res.sendStatus(200);
     } else {
+        console.log('Update voting failed');
         res.sendStatus(400);
     }
 });
