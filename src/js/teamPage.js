@@ -21,6 +21,8 @@ function updateTeamname(){
         .text(getTeamname())
     $('#teamname_input')
         .val(getTeamname());
+    $('#teamname_for_selector')
+        .val(getTeamname());
 }
 
 window.addEventListener('load', () => {
