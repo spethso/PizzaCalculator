@@ -7,7 +7,8 @@ const HashMap = require('hashmap');
 const dirname = fs.realpathSync('./');
 
 var teams = new HashMap();
-var bootstrap_files = [];
+var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
+var team_suggestions = new HashMap();
 
 // build api endpoint for getting js files
 fs.readdirSync(dirname + '/src/js').forEach(file => {
@@ -18,9 +19,7 @@ fs.readdirSync(dirname + '/src/js').forEach(file => {
 
 // build api endpoint for getting bootstrap files
 fs.readdirSync(dirname + '/node_modules/bootstrap/dist/css').forEach(file => {
-    console.log('/node_modules/bootstrap/dist/css/' + file);
     app.get('/css/' + file, function (req, res) {
-        console.log("Adding CSS endpoint for file " + file)
         res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/css/' + file);
     });
 });
@@ -45,13 +44,26 @@ app.get('/pizzas/amount', function (req, res) {
     }
 });
 
+app.get('/pizzas/ingredients', function (req, res) {
+    if (ingredients.length > 0) {
+        res.status(200).end(JSON.stringify(ingredients));
+    } else {
+        res.sendStatus(404);
+    }
+});
+
 app.get('/pizzas/suggestions', function (req, res) {
     let teamname = req.body.teamname;
     if (teamname != undefined) {
-        // TODO 
+        let suggestions = team_suggestions.get(teamname);
+        res.status(200).end(JSON.stringify(suggestions));
     } else {
         res.sendStatus(400);
     }
+});
+
+app.get('/pizzas/suggest', function (req, res) {
+    res.status(200).sendFile(__dirname + '/proposer.html');
 });
 
 app.post('/sessioncreate/', function (req, res) {
@@ -66,6 +78,7 @@ app.post('/sessioncreate/', function (req, res) {
             pizza_count: 0
         };
         teams.set(teamname, data);
+        team_suggestions.set(teamname, []);
         res.status(200).sendFile(__dirname + '/js/teamPage.js');
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname }));
@@ -94,6 +107,26 @@ app.post('/teams/teamsize/', function (req, res) {
         res.status(200).end(JSON.stringify({ teamname: teamname, data: data }));
     } else {
         console.log('Update team size failed');
+        res.sendStatus(400);
+    }
+});
+
+app.post('/pizzas/suggestions', function (req, res) {
+    let teamname = req.body.teamname;
+    let a = '';
+    if (teamname != undefined) {
+
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.post('/pizzas/suggestions/vote', function (req, res) {
+    let teamname = req.body.teamname;
+    let suggestion_id = req.body.id;
+    if (teamname != undefined && suggestion_id != undefined) {
+        // TODO update voting
+    } else {
         res.sendStatus(400);
     }
 });
