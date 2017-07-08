@@ -4,22 +4,24 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 app.use(bodyParser.urlencoded({ extended: true }));
 const HashMap = require('hashmap');
+const dirname = fs.realpathSync('./');
 
 var teams = new HashMap();
 var bootstrap_files = [];
 
 // build api endpoint for getting js files
-fs.readdirSync('../src/js').forEach(file => {
+fs.readdirSync(dirname + '/src/js').forEach(file => {
     app.get('/js/' + file, function (req, res) {
-        res.status(200).sendFile(__dirname + '/js/' + file);
+        res.status(200).sendFile(dirname + '/src/js/' + file);
     });
 });
 
 // build api endpoint for getting bootstrap files
-fs.readdirSync('../node_modules/bootstrap/dist/css').forEach(file => {
-    console.log(file);
+fs.readdirSync(dirname + '/node_modules/bootstrap/dist/css').forEach(file => {
+    console.log('/node_modules/bootstrap/dist/css/' + file);
     app.get('/css/' + file, function (req, res) {
-        res.status(200).sendFile(__dirname + '/css' + file);
+        console.log("Adding CSS endpoint for file " + file)
+        res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/css/' + file);
     });
 });
 
@@ -38,6 +40,15 @@ app.get('/pizzas/amount', function (req, res) {
             amount: teams.get(teamname).pizza_count
         };
         res.status(200).end(JSON.stringify(amount));
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.get('/pizzas/suggestions', function (req, res) {
+    let teamname = req.body.teamname;
+    if (teamname != undefined) {
+        // TODO 
     } else {
         res.sendStatus(400);
     }
