@@ -25,6 +25,22 @@ function updateTeamname(){
         .val(getTeamname());
 }
 
+function getAllSuggestions(){
+    let suggestions;
+    $.ajax({
+        url: '/pizzas/suggestions',
+        data: {
+            teamname: getTeamname()
+        },
+        success: (data) => {
+            suggestions = JSON.parse(data);
+        },
+        method: "GET",
+        async: false
+    })
+    return suggestions
+}
+
 window.addEventListener('load', () => {
     updateTeamname()
 })
