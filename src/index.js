@@ -77,11 +77,14 @@ app.get('/pizzas/ingredients', function (req, res) {
 });
 
 app.get('/pizzas/suggestions', function (req, res) {
-    let teamname = req.body.teamname;
+    let teamname = req.query.teamname;
+    console.log(teamname);
     if (teamname != undefined) {
+        console.log("true");
         let suggestions = team_suggestions.get(teamname);
         res.status(200).end(JSON.stringify(suggestions));
     } else {
+        console.log(req.body);
         res.sendStatus(400);
     }
 });
