@@ -22,20 +22,22 @@
   </head>
 <body>
 	<h1>Pizza Calculator - Feed your team</h1>
-	<form action="/sessioncreate" method="post">
-		<div>
-			<label for="name">Team name:</label>
-			<input type="text" id="name" name="team_name">
-		</div>
-		<div class="button">
-			<button type="submit">Create Team</button>
-		</div>
-	</form>
+  <div class="col-sm-12">
+    <form action="/sessioncreate" method="post">
+      <div>
+        <label for="name">Team name:</label>
+        <input type="text" id="name" name="teamname">
+      </div>
+      <div class="button">
+        <button type="submit" class="btn btn-lg btn-primary">Create Team</button>
+      </div>
+    </form>
+  </div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
