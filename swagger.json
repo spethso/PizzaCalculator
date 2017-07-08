@@ -1,0 +1,332 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "FIUS Pizza Calculator",
+    "description": "Organize your pizza orders",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/js/filename": {
+      "get": {
+        "summary": "GET for every file in /js folder",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "js/filename"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "file resource",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/node_modules/bootstrap/dist/css/filename": {
+      "get": {
+        "summary": "GET for every file in /bootstrap folder",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "tags": [
+          "bootstrap",
+          "css"
+        ],
+        "responses": {
+          "200": {
+            "description": "file resource",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "summary": "Show team page",
+        "parameters": [],
+        "tags": [
+          "Team page"
+        ],
+        "responses": {
+          "200": {
+            "description": "file resource",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/pizzas/amount": {
+      "get": {
+        "summary": "Get amout of pizzas",
+        "parameters": [
+          {
+            "name": "teamname",
+            "in": "body",
+            "description": "Teamname",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Pizza",
+          "Amount"
+        ],
+        "responses": {
+          "200": {
+            "description": "Amount of pizza",
+            "schema": {
+              "$ref": "#/definitions/amount"
+            }
+          },
+          "400": {
+            "description": "Empty body"
+          }
+        }
+      }
+    },
+    "/pizzas/ingredients": {
+      "get": {
+        "summary": "Array of available ingredients",
+        "parameters": [],
+        "tags": [
+          "Ingredients",
+          "Pizzas"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of available ingredients",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "Empty body"
+          }
+        }
+      }
+    },
+    "/pizzas/suggestions": {
+      "get": {
+        "summary": "Get all team suggestions",
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Pizzas",
+          "Suggestions"
+        ],
+        "parameters": [
+          {
+            "name": "teamname",
+            "in": "query",
+            "description": "Teamname",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Suggestions of a team",
+            "schema": {
+              "$ref": "#/definitions/suggestion"
+            }
+          },
+          "404": {
+            "description": "Empty body"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add suggestion for a team",
+        "parameters": [
+          {
+            "name": "suggestion",
+            "in": "body",
+            "description": "Suggestion",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/suggestionsParam"
+            }
+          }
+        ],
+        "tags": [
+          "Pizzas"
+        ],
+        "responses": {
+          "200": {
+            "description": "Suggestion",
+            "schema": {
+              "$ref": "#/definitions/suggestion"
+            }
+          },
+          "400": {
+            "description": "Empty body"
+          }
+        }
+      }
+    },
+    "/pizzas/suggest": {
+      "get": {
+        "summary": "Send proposer file",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "tags": [
+          "Pizzas"
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposer file",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/sessioncreate": {
+      "post": {
+        "summary": "Set input field",
+        "parameters": [
+          {
+            "name": "teamname",
+            "in": "body",
+            "description": "Teamname",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Proposer file",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "Empty body"
+          }
+        }
+      }
+    },
+    "/teams/teamsize/": {
+      "post": {
+        "summary": "Set teamsize",
+        "parameters": [
+          {
+            "name": "teamsizeParam",
+            "in": "body",
+            "description": "teamsizeParam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/teamsizeParam"
+            }
+          }
+        ],
+        "tags": [
+          "Pizzas"
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to subpage"
+          },
+          "400": {
+            "description": "Empty body"
+          }
+        }
+      }
+    },
+    "/pizzas/suggestions/vote": {
+      "post": {
+        "summary": "Vote a suggestion",
+        "parameters": [],
+        "tags": [
+          "Pizzas",
+          "Suggestions",
+          "Vote"
+        ],
+        "responses": {
+          "200": {
+            "description": "Empty body"
+          },
+          "400": {
+            "description": "Empty body"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "amount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        }
+      }
+    },
+    "suggestion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vote": {
+          "type": "number"
+        }
+      }
+    },
+    "suggestionsParam": {
+      "type": "object",
+      "properties": {
+        "teamname": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "teamsizeParam": {
+      "type": "object",
+      "properties": {
+        "teamname": {
+          "type": "string"
+        },
+        "count": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
