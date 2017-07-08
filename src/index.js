@@ -90,9 +90,18 @@ app.get('/pizzas/suggest', function (req, res) {
     res.status(200).sendFile(__dirname + '/proposer.html');
 });
 
+app.get('/teamdata', function (req, res) {
+    let teamname = req.query.teamname;
+    if (teamname != undefined && teams.has(teamname)) {
+        res.end(JSON.stringify(teams.get(teamname)));
+    } else {
+        res.sendStatus(400);
+    }
+})
+
 app.post('/sessioncreate/', function (req, res) {
     let teamname = req.body.teamname;
-    if (teamname != undefined) {
+    if (teamname != undefined && teams.has(teamname) && team_suggestions.has(teamname)) {
         console.log('Creating team ' + teamname);
         let data = {
             teamsize: {
