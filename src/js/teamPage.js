@@ -38,6 +38,22 @@ function getAllSuggestions(){
     return suggestions
 }
 
+function vote(value, id){
+    const voteObject = {
+        teamname: getTeamname(),
+        id: id,
+        vote: value
+    };
+
+    $.ajax({
+        url: '/pizzas/suggestions/vote',
+        data: voteObject,
+        success: () => {
+            console.log("Your vote has been sent to the server.")
+        }
+    })
+}
+
 /**
  * Generate DOM structure for a pizza topping suggestion
  * @param id suggestion ID assigned by the backend for this suggestion
