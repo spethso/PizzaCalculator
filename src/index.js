@@ -9,8 +9,8 @@ var teams = new HashMap();
 var js_files = [];
 
 // read all files in js subfolder and set names in js_files array
-fs.readdirSync('js').forEach(file => {
-    js_files.push(file);
+fs.readdirSync('src/js').forEach(file => {
+        js_files.push(file);
 });
 // build api endpoint for getting js files
 js_files.forEach(function (filename) {
