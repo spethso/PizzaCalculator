@@ -1,10 +1,18 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const fs = require('fs');
 app.use(bodyParser.urlencoded({ extended: true }));
 const HashMap = require('hashmap');
 
 var teams = new HashMap();
+var js_files = [];
+
+js_files.forEach(function (filename) {
+    app.get('/js/' + filename, function (req, res) {
+        res.sendFile(__dirname + '/js/' + filename + '.js');
+    });
+});
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/index.htm");
@@ -13,6 +21,8 @@ app.get('/', function (req, res) {
 app.get('/teams', function (req, res) {
     res.sendFile(__dirname + "/teamPage.html");
 });
+
+
 
 app.post('/sessioncreate/', function (req, res) {
     let teamname = req.body.teamname;
@@ -47,6 +57,7 @@ app.post('/teams/teamsize/', function (req, res) {
         };
         teams.set(teamname, data);
         res.redirect(302, '/teams/?teamname=' + teamname);
+        res.status(200).end(JSON.stringify({ teamname: teamname, TODO }));
     } else {
         console.log('Update team size failed');
         res.sendStatus(400);
@@ -68,6 +79,11 @@ function saveToFile(data, filename = "tfmap.log", exitOnWrite = false) {
 }
 
 var server = app.listen(8081, function () {
+    // read all files in js subfolder and set names in js_files array
+    fs.readdirSync('js').forEach(file => {
+        js_files.push(file);
+    });
+
     var host = server.address().address;
     var port = server.address().port;
     console.log("REST server listening at http://%s:%s", host, port);
