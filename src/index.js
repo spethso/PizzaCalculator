@@ -9,7 +9,7 @@ var teams = new HashMap();
 var js_files = [];
 
 // read all files in js subfolder and set names in js_files array
-fs.readdirSync('js').forEach(file => {
+fs.readdirSync('src/js').forEach(file => {
         js_files.push(file);
 });
 
