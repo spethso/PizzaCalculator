@@ -10,30 +10,6 @@ var teams = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
 var team_suggestions = new HashMap();
 
-// DUMMI DATA
-let i1 = {
-    id: 0,
-    ingredients: ['Salami', 'Schinken'],
-    vote: 20
-};
-let i2 = {
-    id: 1,
-    ingredients: ['Oliven', 'Schinken'],
-    vote: 2
-};
-let i3 = {
-    id: 2,
-    ingredients: ['Salami', 'Pilze', 'Oliven'],
-    vote: 0
-};
-let i4 = {
-    id: 3,
-    ingredients: ['Salami', 'Feta', 'Maultaschen', 'Speck'],
-    vote: 7
-};
-team_suggestions.set('team', [i1, i2, i3, i4]);
-// END DUMMI DATA
-
 // build api endpoint for getting js files
 fs.readdirSync(dirname + '/src/js').forEach(file => {
     app.get('/js/' + file, function (req, res) {
@@ -94,7 +70,7 @@ app.get('/pizzas/suggest', function (req, res) {
 app.get('/teamdata', function (req, res) {
     let teamname = req.query.teamname;
     if (teamname != undefined && teams.has(teamname)) {
-        res.end(JSON.stringify(teams.get(teamname)));
+        res.status(200).end(JSON.stringify(teams.get(teamname)));
     } else {
         res.sendStatus(400);
     }
