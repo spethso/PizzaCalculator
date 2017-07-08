@@ -10,6 +10,10 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + "/index.htm");
 });
 
+app.get('/teams', function (req, res) {
+    res.sendFile(__dirname + "/teamPage.html");
+});
+
 app.post('/sessioncreate/', function (req, res) {
     let teamname = req.body.teamname;
     if (teamname != undefined) {
@@ -21,7 +25,7 @@ app.post('/sessioncreate/', function (req, res) {
             }
         };
         teams.set(teamname, team);
-        res.redirect(302, '/teams');
+        res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname }));
     } else {
         console.log('Creating Team: Failure because of undefined teamname!');
@@ -29,10 +33,17 @@ app.post('/sessioncreate/', function (req, res) {
     }
 });
 
-app.get('/teams', function (req, res) {
-    res.sendFile(__dirname + "/teamPage.html");
+app.post('/teams', function (req, res) {
+    let count = req.body.count;
+    let type = req.body.type;
+    let teamname = req.body.teamname;
+    if (count != undefined && type != undefined && teamname != undefined) {
+        console.log('TODO');
+    } else {
+        console.log('Set team information failed');
+        res.sendStatus(400);
+    }
 });
-
 
 
 
