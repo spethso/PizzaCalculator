@@ -1,27 +1,12 @@
-const fs = require('fs');
-const http = require('http');
-const HttpDispatcher = require('httpdispatcher');
-const port = 5910;
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+app.use(express.static('public'));
+app.use(bodyParser.json());
 
-var dispatcher = new HttpDispatcher();
-
-function handleRequest(request, response){
-    try{
-        dispatcher.dispatch(request,response)
-    } catch (err) {
-        console.warn(err);
-    }
-}
-
-function defineRouteHandlers(){
-    dispatcher.onGet('/', function(request, response){
-        response.end(result);
-    });
-
-    dispatcher.onGet('/result', function(request, response){
-        response.end(result);
-    });
-}
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + "/index.htm");
+});
 
 
 function saveToFile(data, filename = "tfmap.log", exitOnWrite = false){
@@ -36,14 +21,8 @@ function saveToFile(data, filename = "tfmap.log", exitOnWrite = false){
     }
 }
 
-var server = http.createServer(handleRequest);
-
-server.listen(port, function(){
-    console.log("Adding handlers for routes...")
-    defineRouteHandlers();
-
-    console.log("ML Server listening on http://localhost:%s" , port);
-    console.log("\tVisit /log to retrieve all logs");
-    console.log("\tVisit /result to retrieve the result");
-    console.log("Starting TFMAP...")
-})
+var server = app.listen(8081, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log("REST server listening at http://%s:%s", host, port);
+});
