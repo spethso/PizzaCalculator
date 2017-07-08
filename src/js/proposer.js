@@ -26,6 +26,7 @@ function getCheckboxForIngredient(ingredient){
         .attr('for', 'checkbox' + ingredient)
         .text(ingredient)
     return $('<div></div>')
+        .addClass("checkbox")
         .append($inputElement)
         .append($label)
 }
@@ -60,22 +61,6 @@ function submitProposal(){
         },
         success: () => {
             console.log("Your ingredients have been proposed.")
-        }
-    })
-}
-
-function vote(value, id){
-    const voteObject = {
-        teamname: getTeamname(),
-        id: id,
-        vote: value
-    };
-
-    $.ajax({
-        url: '/pizzas/suggestions/vote',
-        data: voteObject,
-        success: () => {
-            console.log("Your vote has been sent to the server.")
         }
     })
 }
