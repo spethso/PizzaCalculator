@@ -52,7 +52,7 @@ function submitProposal(){
     }
 
     $.ajax({
-        url: '/pizza/suggestions',
+        url: '/pizzas/suggestions',
         method: "POST",
         data: {
             teamname: getTeamname(),
