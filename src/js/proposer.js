@@ -64,6 +64,22 @@ function submitProposal(){
     })
 }
 
+function vote(value, id){
+    const voteObject = {
+        teamname: getTeamname(),
+        id: id,
+        vote: value
+    };
+
+    $.ajax({
+        url: '/pizzas/suggestions/vote',
+        data: voteObject,
+        success: () => {
+            console.log("Your vote has been sent to the server.")
+        }
+    })
+}
+
 window.addEventListener('load', () => {
     addCheckboxesToForm()
 })
