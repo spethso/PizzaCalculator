@@ -1,3 +1,8 @@
+function getTeamname(){
+    const parameters = retrieveGetParameters();
+    return parameters["teamname"];
+}
+
 function getPossibleIngredients(){
     let responseJSON;
 
@@ -29,6 +34,33 @@ function addCheckboxesToForm(){
     getPossibleIngredients().forEach((currentElement) => {
         $('#selector')
             .append(getCheckboxForIngredient(currentElement))
+    })
+}
+
+function submitProposal(){
+    let proposedIngredients = [];
+    $('#selector')
+        .find("input[type='checkbox']")
+        .each((index, element) => {
+            if($(element).is(':checked')){
+                proposedIngredients.push($(element).attr('value'))
+            }
+        });
+
+    if(proposedIngredients.length > 4){
+        alert('Please select at most 4 ingredients!')
+    }
+
+    $.ajax({
+        url: '/pizza/suggestions',
+        method: "POST",
+        data: {
+            teamname: getTeamname(),
+            ingredients: proposedIngredients
+        },
+        success: () => {
+            console.log("Your ingredients have been proposed.")
+        }
     })
 }
 

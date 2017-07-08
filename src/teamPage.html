@@ -137,12 +137,15 @@
             </div>
             <div class="col-sm-3">
                 <!--Column right-->
-                <form id="selector" action="/pizzas/suggestions" method="post">
+                <div id="selector">
+                    <div>
+                        <input type="hidden" id="teamname_for_selector" name="teamname" value="TEAM NAME HIER">
+                    </div>
 
                     <div>
-                        <button type="submit">Vorschlag absenden</button>
+                        <button onclick="submitProposal()">Vorschlag absenden</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
 </body>
