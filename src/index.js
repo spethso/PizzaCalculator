@@ -4,27 +4,54 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 app.use(bodyParser.urlencoded({ extended: true }));
 const HashMap = require('hashmap');
+const dirname = fs.realpathSync('./');
 
 var teams = new HashMap();
-var js_files = [];
+var bootstrap_files = [];
 
-// read all files in js subfolder and set names in js_files array
-fs.readdirSync('src/js').forEach(file => {
-        js_files.push(file);
-});
 // build api endpoint for getting js files
-js_files.forEach(function (filename) {
-    app.get('/js/' + filename, function (req, res) {
-        res.sendFile(__dirname + '/js/' + filename);
+fs.readdirSync(dirname + '/src/js').forEach(file => {
+    app.get('/js/' + file, function (req, res) {
+        res.status(200).sendFile(dirname + '/src/js/' + file);
+    });
+});
+
+// build api endpoint for getting bootstrap files
+fs.readdirSync(dirname + '/node_modules/bootstrap/dist/css').forEach(file => {
+    console.log('/node_modules/bootstrap/dist/css/' + file);
+    app.get('/css/' + file, function (req, res) {
+        console.log("Adding CSS endpoint for file " + file)
+        res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/css/' + file);
     });
 });
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + "/index.htm");
+    res.status(200).sendFile(__dirname + "/index.htm");
 });
 
 app.get('/teams', function (req, res) {
-    res.sendFile(__dirname + "/teamPage.html");
+    res.status(200).sendFile(__dirname + "/teamPage.html");
+});
+
+app.get('/pizzas/amount', function (req, res) {
+    let teamname = req.body.teamname;
+    if (teamname != undefined) {
+        let amount = {
+            amount: teams.get(teamname).pizza_count
+        };
+        res.status(200).end(JSON.stringify(amount));
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.get('/pizzas/suggestions', function (req, res) {
+    let teamname = req.body.teamname;
+    if (teamname != undefined) {
+        // TODO 
+    } else {
+        res.sendStatus(400);
+    }
 });
 
 app.post('/sessioncreate/', function (req, res) {
@@ -35,7 +62,8 @@ app.post('/sessioncreate/', function (req, res) {
             teamsize: {
                 number: 0,
                 type: 'Not defined'
-            }
+            },
+            pizza_count: 0
         };
         teams.set(teamname, data);
         res.status(200).sendFile(__dirname + '/js/teamPage.js');
