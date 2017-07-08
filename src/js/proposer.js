@@ -16,6 +16,22 @@ function getPossibleIngredients(){
     return responseJSON;
 }
 
+function getAllSuggestions(){
+    let suggestions;
+    $.ajax({
+        url: '/pizzas/suggestions',
+        data: {
+            teamname: getTeamname()
+        },
+        success: (data) => {
+            suggestions = JSON.parse(data);
+        },
+        method: "GET",
+        async: false
+    })
+    return suggestions
+}
+
 function getCheckboxForIngredient(ingredient){
     const $inputElement = $('<input>')
         .attr('type', 'checkbox')
