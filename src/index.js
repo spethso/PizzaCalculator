@@ -18,13 +18,13 @@ app.post('/sessioncreate/', function (req, res) {
     let teamname = req.body.teamname;
     if (teamname != undefined) {
         console.log('Creating team ' + teamname);
-        let team = {
+        let data = {
             teamsize: {
                 number: 0,
                 type: 'Not defined'
             }
         };
-        teams.set(teamname, team);
+        teams.set(teamname, data);
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname }));
     } else {
@@ -33,14 +33,22 @@ app.post('/sessioncreate/', function (req, res) {
     }
 });
 
-app.post('/teams', function (req, res) {
+app.post('/teams/teamsize/', function (req, res) {
     let count = req.body.count;
     let type = req.body.type;
     let teamname = req.body.teamname;
     if (count != undefined && type != undefined && teamname != undefined) {
-        console.log('TODO');
+        console.log('Update team size for team' + teamname);
+        let data = {
+            teamsize: {
+                number: count,
+                type: type
+            }
+        };
+        teams.set(teamname, data);
+        res.redirect(302, '/teams/?teamname=' + teamname);
     } else {
-        console.log('Set team information failed');
+        console.log('Update team size failed');
         res.sendStatus(400);
     }
 });
