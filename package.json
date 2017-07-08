@@ -1,0 +1,19 @@
+{
+  "name": "pizzacalculator",
+  "version": "1.0.0",
+  "description": "Web app for finding a consensus on which pizza to order",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spethso/PizzaCalculator.git"
+  },
+  "author": "Sandro Speth, Heiko Geppert, Matthias Hermann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spethso/PizzaCalculator/issues"
+  },
+  "homepage": "https://github.com/spethso/PizzaCalculator#readme"
+}
