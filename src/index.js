@@ -10,9 +10,9 @@ var js_files = [];
 
 // read all files in js subfolder and set names in js_files array
 fs.readdirSync('js').forEach(file => {
-        js_files.push(file);
+    js_files.push(file);
 });
-
+// build api endpoint for getting js files
 js_files.forEach(function (filename) {
     app.get('/js/' + filename, function (req, res) {
         res.sendFile(__dirname + '/js/' + filename);
@@ -26,8 +26,6 @@ app.get('/', function (req, res) {
 app.get('/teams', function (req, res) {
     res.sendFile(__dirname + "/teamPage.html");
 });
-
-
 
 app.post('/sessioncreate/', function (req, res) {
     let teamname = req.body.teamname;
@@ -55,23 +53,24 @@ app.post('/teams/teamsize/', function (req, res) {
     let teamname = req.body.teamname;
     if (count != undefined && type != undefined && teamname != undefined) {
         console.log('Update team size for team' + teamname);
-        // TODO calc pizza number and add to data
+        let pizza_count = computeNumberOfPizzas(count, type);
         let data = {
             teamsize: {
                 number: count,
                 type: type
-            }
+            },
+            pizza_count: pizza_count
         };
         teams.set(teamname, data);
         res.redirect(302, '/teams/?teamname=' + teamname);
-        res.status(200).end(JSON.stringify({ teamname: teamname, data : data }));
+        res.status(200).end(JSON.stringify({ teamname: teamname, data: data }));
     } else {
         console.log('Update team size failed');
         res.sendStatus(400);
     }
 });
 
-function computeNumberOfPizzas(number, type) {
+function computeNumberOfPizzas(count, type) {
     return 4; // TODO
 };
 
