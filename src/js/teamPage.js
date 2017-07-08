@@ -15,3 +15,12 @@ function getTeamname(){
     const parameters = retrieveGetParameters();
     return parameters["teamname"];
 }
+
+function updateTeamname(){
+    $('h1')
+        .text(getTeamname())
+}
+
+window.addEventListener('load', () => {
+    updateTeamname()
+})
