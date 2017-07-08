@@ -2,57 +2,59 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team</title>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Team</title>
-
-        <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
-        <!-- Bootstrap theme -->
-        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.css">
 
 
-    </head>
+</head>
 
-    <body>
-        <div class="jumbotron">
-            <div class="container text-center">
-                <h1>TEAM NAME HIER</h1>
-                <form action="/teamsize" class="form-inline">
-                    <div class="form-group">
-                        <label for="count">Anzahl:</label>
-                        <input class="form-control" type="text" id="count" name="count">
-                    </div>
-                    <div class="form-group">
-                        <select name="type" size="1" class="form-control">
+<body>
+    <div class="jumbotron">
+        <div class="container text-center">
+            <h1>TEAM NAME HIER</h1>
+
+            <form action="/teams/teamsize" method="post" class="form-inline">
+                <div class="form-group">
+                    <label for="count">Anzahl:</label>
+                    <input class="form-control" type="text" id="count" name="count">
+                </div>
+                <div class="form-group">
+                    <select name="type" size="1" class="form-control">
                             <option>Personen</option>
                             <option>Pizzastücke</option>
                         </select>
-                    </div>
-                    <div>
-                        <input type="hidden" id="teamname" name="teamname" value="TEAM NAME HIER">
-                    </div>
-                    <div>
-                        <button type="submit">Aktualisiere</button>
-                    </div>
-                </form>
+                </div>
+                <div>
+                    <input type="hidden" id="teamname" name="teamname" value="TEAM NAME HIER">
+                </div>
+                <div>
+                    <input type="hidden" id="teamname" name="teamname" value="TEAM NAME HIER">
+                </div>
+                <div>
+                    <button type="submit">Aktualisiere</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <!--Row with two columns-->
+        <div class="row">
+            <div class="col-sm-9">
+                <!--Column left-->
+                show pizzas later
+            </div>
+            <div class="col-sm-3">
+                <!--Column right-->
+                show more stuff later </br>
+                ignores maybe...
             </div>
         </div>
-        <div class="container">
-            <!--Row with two columns-->
-            <div class="row">
-                <div class="col-sm-9">
-                    <!--Column left-->
-                    show pizzas later
-                </div>
-                <div class="col-sm-3">
-                    <!--Column right-->
-                    show more stuff later </br>
-                    ignores maybe...
-                </div>
-            </div>
-    </body>
+</body>
 
 </html>
