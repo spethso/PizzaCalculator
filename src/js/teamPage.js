@@ -305,7 +305,10 @@ function createPizzaBox(ingredientsLeft, ingredientsRight){
         .slice(0, -4);
 
     let $leftBox = $('<div>')
-        .css('border-width', '5px')
+        .css('border-top-width', '4px')
+        .css('border-right-width', '2px')
+        .css('border-bottom-width', '4px')
+        .css('border-left-width', '4px')
         .css('border-color', 'black')
         .css('border-style', 'solid')
         .css('float', 'left')
@@ -313,7 +316,10 @@ function createPizzaBox(ingredientsLeft, ingredientsRight){
         .css('width', '50%')
         .html(leftSideText);
     let $rightBox = $('<div>')
-        .css('border-width', '5px')
+        .css('border-top-width', '4px')
+        .css('border-right-width', '4px')
+        .css('border-bottom-width', '4px')
+        .css('border-left-width', '2px')
         .css('border-color', 'black')
         .css('border-style', 'solid')
         .css('float', 'right')
