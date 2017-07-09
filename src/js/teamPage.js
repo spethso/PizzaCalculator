@@ -292,11 +292,13 @@ function showTemplates() {
 
 function createPizzaBox(ingredientsLeft, ingredientsRight){
     let leftSideText = ingredientsLeft.ingredients
+        .concat((new Array(4 - ingredientsLeft.ingredients.length)).fill("-"))
         .reduce((acc, val) => {
             return acc + val + "<br>"
         }, "")
         .slice(0, -4);
     let rightSideText = ingredientsRight.ingredients
+        .concat((new Array(4 - ingredientsRight.ingredients.length)).fill("-"))
         .reduce((acc, val) => {
             return acc + val + "<br>"
         }, "")
