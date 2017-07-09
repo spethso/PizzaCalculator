@@ -30,7 +30,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/teams', function (req, res) {
-    res.status(200).sendFile(__dirname + "/teamPage.html");
+    let teamname = req.query.teamname;
+    console.log(teamname);
+    if (teamname != undefined && teams.has(teamname)) {
+        res.status(200).sendFile(__dirname + "/teamPage.html");
+    } else {
+        res.redirect(302, '/');
+    }
+    
 });
 
 app.get('/pizzas/amount', function (req, res) {
@@ -63,10 +70,6 @@ app.get('/pizzas/suggestions', function (req, res) {
     }
 });
 
-app.get('/pizzas/suggest', function (req, res) {
-    res.status(200).sendFile(__dirname + '/proposer.html');
-});
-
 app.get('/teams/data', function (req, res) {
     let teamname = req.query.teamname;
     if (teamname != undefined && teams.has(teamname)) {
@@ -97,7 +100,7 @@ app.post('/teams/create', function (req, res) {
         res.redirect(303, '/teams/?teamname=' + teamname);
     } else {
         console.log('Creating Team: Failure because of undefined teamname!');
-        res.sendStatus(420);
+        res.status(420);
     }
 });
 
