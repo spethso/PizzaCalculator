@@ -153,7 +153,7 @@ app.post('/teams/teamsize', function (req, res) {
 app.post('/pizzas/suggestions', function (req, res) {
     let teamname = req.body.teamname;
     let ingredients = req.body.ingredients;
-    if (teamname != undefined && ingredients.length > 0 && team_suggestions.has(teamname)) {
+    if (teamname != undefined && team_suggestions.has(teamname)) {
         console.log('Add suggestion for team ' + teamname);
         let suggestion = {
             id: team_suggestions.get(teamname).length,
