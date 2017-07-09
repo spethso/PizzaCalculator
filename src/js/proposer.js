@@ -50,6 +50,7 @@ function submitProposal(){
 
     if(proposedIngredients.length > 4){
         alert('Please select at most 4 ingredients!')
+        return;
     }
 
     $.ajax({
