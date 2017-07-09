@@ -18,6 +18,7 @@ const timeoutInMS = 28800000;
 var teams = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
 var team_suggestions = new HashMap();
+var templates = JSON.parse(fs.readFileSync(__dirname + '/data/templates.json', 'utf8'));
 
 // build api endpoint for getting js files
 fs.readdirSync(dirname + '/src/js').forEach(file => {
@@ -77,11 +78,11 @@ app.get('/pizzas/amount', function (req, res) {
 });
 
 app.get('/pizzas/ingredients', function (req, res) {
-    if (ingredients.length > 0) {
-        res.status(200).end(JSON.stringify(ingredients));
-    } else {
-        res.redirect(303, '/');
-    }
+    res.status(200).end(JSON.stringify(ingredients));
+});
+
+app.get('/pizzas/templates', function (req, res) {
+    res.status(200).end(JSON.stringify(templates));
 });
 
 app.get('/pizzas/suggestions', function (req, res) {
