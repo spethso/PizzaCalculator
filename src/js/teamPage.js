@@ -249,11 +249,14 @@ function showTemplates() {
     templates = getTemplates();
     
     const buttonConcat = $('<div></div>')
-    
     templates.forEach(function(element, index) {
+        const ingredientsString = element.ingredients.reduce((acc, val) => {
+               return acc + val + ", "
+            }, "")
+            .slice(0, -2);
 
         const lb = $('<label><b> ' + element.name + ': </b></label>');
-        const ingr = $('<label><small>' + element.ingredients + '</small></label>')
+        const ingr = $('<label><small>' + ingredientsString + '</small></label>')
         const btn = $('<button id="btn-' + index + '">/button>')
             .attr('type', 'button')
             .addClass('btn btn-success btn-xs')
