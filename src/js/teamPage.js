@@ -324,3 +324,32 @@ function createPizzaBox(ingredientsLeft, ingredientsRight){
         .append($leftBox)
         .append($rightBox)
 }
+
+function showOrderView(){
+    const suggestions = getAllSuggestions();
+    const boxes = []
+    let $pageContent = $('<div>');
+
+    if(suggestions.length % 2 !== 0){
+        swal({
+            title: "Ungerade Anzahl an Vorschlägen",
+            text: "Eine Pizza hat nur eine belegte Seite!",
+            type: "warning"
+        })
+        return;
+    }
+
+    for(let i = 0; i < suggestions.length; i += 2){
+        boxes.push(createPizzaBox(suggestions[i], suggestions[i+1]));
+    }
+
+    for(let $box of boxes){
+        $pageContent = $($pageContent)
+            .append($($box))
+    }
+
+    swal({
+        title: "Bestellansicht",
+        html: $($pageContent)
+    })
+}
