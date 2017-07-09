@@ -252,13 +252,23 @@ function showTemplates() {
     
     templates.forEach(function(element, index) {
 
+        const lb = $('<label><b> ' + element.name + ': </b></label>');
+        const ingr = $('<label><small>' + element.ingredients + '</small></label>')
         const btn = $('<button id="btn-' + index + '">/button>')
             .attr('type', 'button')
             .addClass('btn btn-success btn-xs')
-            .text(element.name)
+            .text('auswählen')
 
         const btnPara = $('<p></p>')
-        btnPara.append(btn);
+        btnPara
+            .append($('<br/>'))
+            .append(lb)
+            .append($('<br/>'))
+            .append(ingr)
+            .append($('<br/>'))
+            .append(btn)
+            .append($('<br/>'))
+            
         buttonConcat.append(btnPara);
     });
 
