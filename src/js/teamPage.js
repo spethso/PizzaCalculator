@@ -44,12 +44,12 @@ function vote(value, id){
         id: id,
         vote: value
     };
-
     $.ajax({
         url: '/pizzas/suggestions/vote',
         data: voteObject,
         success: () => {
             console.log("Your vote has been sent to the server.")
+            window.location.reload(true);
         },
         method: "POST"
     })
@@ -62,23 +62,22 @@ function voteHandler(event){
     if($($eventTarget).hasClass('btn-success')
             && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'positive'){
         //Send & save positive vote
-        vote(1, suggestionID);
         if(storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'negative'){
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'neutral');
         } else {
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'positive');
         }
+        vote(1, suggestionID);
     } else if($($eventTarget).hasClass('btn-danger')
             && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'negative'){
         //Send & save negative vote
-        vote(-1, suggestionID);
         if(storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'positive'){
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'neutral');
         } else {
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'negative');
         }
+        vote(-1, suggestionID);
     }
-    window.location.reload(true);
 }
 
 /**
