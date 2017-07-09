@@ -195,7 +195,7 @@ function getAmount(){
 function getTeamdata(){
     let data;
     $.ajax({
-        url: '/teamdata/?teamname='+getTeamname(),
+        url: '/teams/data/?teamname='+getTeamname(),
         success: (res) => {
             data = JSON.parse(res);
         },
