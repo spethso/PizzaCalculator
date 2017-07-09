@@ -53,8 +53,31 @@ function submitProposal(){
         return;
     } else if (proposedIngredients.length === 0){
         proposedIngredients.push('Margherita')
+    } else if (proposedIngredients.length === 3){
+        swal({
+                title: "Sind Sie sicher?",
+                text: "Eine Pizza mit 3 Zutaten kostet genauso viel, wie eine mit 4 Zutaten.\n" +
+                "Möchten Sie auf eine gratis Zutat verzichten?",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Nein",
+                confirmButtonText: "Ja",
+                confirmButtonColor: '#449d44',
+                cancelButtonColor: '#d33',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+            }).then(() => {
+                postPizzaSuggestion(proposedIngredients)
+            },
+            (dismiss) => {
+                //do nothing
+        });
+        return;
     }
+    postPizzaSuggestion(proposedIngredients)
+}
 
+function postPizzaSuggestion(proposedIngredients){
     $.ajax({
         url: '/pizzas/suggestions',
         method: "POST",
