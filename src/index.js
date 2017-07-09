@@ -5,6 +5,7 @@ const fs = require('fs');
 app.use(bodyParser.urlencoded({ extended: true }));
 const HashMap = require('hashmap');
 const dirname = fs.realpathSync('./');
+const timeoutInMS = 28800000;
 
 var teams = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
@@ -91,7 +92,7 @@ app.post('/teams/create', function (req, res) {
         setTimeout(callback => {
             teams.remove(teamname);
             team_suggestions.remove(teamname);
-        }, 50000);
+        }, timeoutInMS);
         res.status(200).sendFile(__dirname + '/js/teamPage.js');
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname }));
