@@ -83,7 +83,7 @@ function voteHandler(event){
  */
 function generateSuggestionPanel(id, headingText, voteCount, success, ingredients){
     const ingredientsList = ingredients
-        .concat((new Array(4 - ingredients.length)).fill(""))
+        .concat((new Array(4 - ingredients.length)).fill("-"))
         .reduce((acc, val) => {
             return acc + val + "<br>"
         }, "")
