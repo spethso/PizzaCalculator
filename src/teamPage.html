@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pizza Calculator</title>
 
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
     <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="/js/teamPage.js"></script>
     <script src="/js/proposer.js"></script>
@@ -54,25 +54,31 @@
             </div>
             <div class="col-sm-3">
                 <!--Column right-->
+                <div class="col-sm-12" id="predefine">
+                    <!-- predefined suggestions -->
+                    <div class="btn btn-primary" onclick="showTemplates();">Vorlagen
+                    </div>
+                </div>
 
-         
-                        <div class="col-sm-12" id="selector">
-                            <div>
-                                <input type="hidden" id="teamname_for_selector" name="teamname" value="TEAM NAME HIER">
-                            </div>
 
-                            <div>
-                                <button class="btn btn-primary" onclick="submitProposal()">Vorschlag absenden</button>
-                            </div>
-                        </div>
-  
+                <div class="col-sm-12" id="selector">
+                    <!-- select topings for suggestion -->
+                    <div>
+                        <input type="hidden" id="teamname_for_selector" name="teamname" value="TEAM NAME HIER">
+                    </div>
+
+                    <div>
+                        <button class="btn btn-primary" onclick="submitProposal()">Vorschlag absenden</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
     <footer class="footer">
-      <div class="container text-center">
-        <p class="text-muted">The pizza calculator was created by Sandro, Matthias and Heiko.</p>
-      </div>
+        <div class="container text-center">
+            <p class="text-muted">The pizza calculator was created by Sandro, Matthias and Heiko.</p>
+        </div>
     </footer>
 
 </body>

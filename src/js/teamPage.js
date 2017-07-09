@@ -1,4 +1,4 @@
-function retrieveGetParameters(){
+function retrieveGetParameters() {
     let parameters = {}
     window.location.search
         .substring(1)                                       //Remove '?' at beginning
@@ -11,12 +11,12 @@ function retrieveGetParameters(){
     return parameters;
 }
 
-function getTeamname(){
+function getTeamname() {
     const parameters = retrieveGetParameters();
     return parameters["teamname"];
 }
 
-function updateTeamname(){
+function updateTeamname() {
     $('h1')
         .text(getTeamname())
     $('#teamname_input')
@@ -25,10 +25,10 @@ function updateTeamname(){
         .val(getTeamname());
 }
 
-function getAllSuggestions(){
+function getAllSuggestions() {
     let suggestions;
     $.ajax({
-        url: '/pizzas/suggestions/?teamname='+getTeamname(),
+        url: '/pizzas/suggestions/?teamname=' + getTeamname(),
         success: (res) => {
             suggestions = JSON.parse(res);
         },
@@ -38,7 +38,7 @@ function getAllSuggestions(){
     return suggestions
 }
 
-function vote(value, id){
+function vote(value, id) {
     const voteObject = {
         teamname: getTeamname(),
         id: id,
@@ -55,23 +55,23 @@ function vote(value, id){
     })
 }
 
-function voteHandler(event){
+function voteHandler(event) {
     const storage = window.localStorage;
     const $eventTarget = event.target;
     const suggestionID = $(event.target).parent().parent().parent().parent().parent().parent().parent().attr('suggestion-id');
-    if($($eventTarget).hasClass('btn-success')
-            && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'positive'){
+    if ($($eventTarget).hasClass('btn-success')
+        && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'positive') {
         //Send & save positive vote
-        if(storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'negative'){
+        if (storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'negative') {
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'neutral');
         } else {
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'positive');
         }
         vote(1, suggestionID);
-    } else if($($eventTarget).hasClass('btn-danger')
-            && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'negative'){
+    } else if ($($eventTarget).hasClass('btn-danger')
+        && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'negative') {
         //Send & save negative vote
-        if(storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'positive'){
+        if (storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'positive') {
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'neutral');
         } else {
             storage.setItem('voted_for_suggestion_id_' + suggestionID, 'negative');
@@ -89,7 +89,7 @@ function voteHandler(event){
  * @param ingredients list of ingredients used as pizza topping suggestion
  * @returns {*|jQuery}
  */
-function generateSuggestionPanel(id, headingText, voteCount, success, ingredients){
+function generateSuggestionPanel(id, headingText, voteCount, success, ingredients) {
     const ingredientsList = ingredients
         .concat((new Array(4 - ingredients.length)).fill("-"))
         .reduce((acc, val) => {
@@ -146,7 +146,7 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
                 .html(ingredientsList.slice(0, -4))
 
         const $panel = $('<div></div>')
-            .addClass('panel ' + ((success)? 'panel-success' : 'panel-danger'))
+            .addClass('panel ' + ((success) ? 'panel-success' : 'panel-danger'))
             .append($panelHeading)
             .append($panelBody)
 
@@ -158,23 +158,23 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
     return $panelColumn;
 }
 
-function getAmount(){
+function getAmount() {
     let amount;
     $.ajax({
-        url: '/pizzas/amount/?teamname='+getTeamname(),
+        url: '/pizzas/amount/?teamname=' + getTeamname(),
         success: (res) => {
             amount = JSON.parse(res);
         },
         method: "GET",
         async: false
     })
-    return (amount)? amount.amount : 0;
+    return (amount) ? amount.amount : 0;
 }
 
-function getTeamdata(){
+function getTeamdata() {
     let data;
     $.ajax({
-        url: '/teams/data/?teamname='+getTeamname(),
+        url: '/teams/data/?teamname=' + getTeamname(),
         success: (res) => {
             data = JSON.parse(res);
         },
@@ -193,13 +193,13 @@ window.addEventListener('load', () => {
     teamdata = getTeamdata();
     document.getElementById("count").value = teamdata.teamsize.number;
 
-    if (teamdata.teamsize.type != null){
+    if (teamdata.teamsize.type != null) {
         document.getElementById("type").value = teamdata.teamsize.type;
     }
 
     suggestions = getAllSuggestions() || [];
-    suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
-    suggestions.forEach(function(element, index) {
+    suggestions.sort(function (a, b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0); });
+    suggestions.forEach(function (element, index) {
 
         success = false;
         if (index < amount) {
@@ -210,3 +210,38 @@ window.addEventListener('load', () => {
             .append(generateSuggestionPanel(element.id, "Vorschlag " + element.id, element.vote, success, element.ingredients));
     });
 });
+
+function getTemplates(){
+    let templates;
+    $.ajax({
+        url: '/pizzas/templates/?teamname=' + getTeamname(),
+        success: (res) => {
+            templates = JSON.parse(res);
+        },
+        method: "GET",
+        async: false
+    })
+    return templates
+}
+
+function showTemplates() {
+
+    templates = getTemplates();
+    
+    const buttonConcat = $('<div></div>')
+
+    templates.forEach(function(element, index) {
+        const btn = $('<button>/button>')
+            .attr('type', 'button')
+            .addClass('btn btn-success btn-xs')
+            .text(element.name)
+            .click() //TODO imlement
+        buttonConcat.append(btn);
+    });
+
+    swal({
+        title: "Vorlagen",
+        text: "A custom <span style=\"color: #F8BB86\">html</span> message.",
+        html: true
+    });
+}
