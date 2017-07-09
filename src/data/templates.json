@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Schleife",
+    "ingredients": [
+      "Maultaschen",
+      "Schinken",
+      "Speck",
+      "Hackfleischklöse"
+    ]
+  },
+  {
+    "name": "A lá Flo",
+    "ingredients": [
+      "Hackfleischsoße",
+      "Zwiebeln",
+      "Mais",
+      "Speck"
+    ]
+  },
+  {
+    "name": "Sucuk (scharf)",
+    "ingredients": [
+      "türk. Salami",
+      "Mais",
+      "Speck",
+      "Pepperoni (scharf)"
+    ]
+  },
+  {
+    "name": "Sucuk (mild)",
+    "ingredients": [
+      "türk. Salami",
+      "Mais",
+      "Speck",
+      "Fetakäse"
+    ]
+  },
+  {
+    "name": "MC's Sucuk-Pizza",
+    "ingredients": [
+      "türk. Salami",
+      "Zwiebeln",
+      "Mais",
+      "Speck"
+    ]
+  }
+]
