@@ -41,7 +41,7 @@ app.get('/pizzas/amount', function (req, res) {
         res.status(200).end(JSON.stringify(amount));
     } else {
         // res.sendStatus(400);
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 });
 
@@ -49,7 +49,7 @@ app.get('/pizzas/ingredients', function (req, res) {
     if (ingredients.length > 0) {
         res.status(200).end(JSON.stringify(ingredients));
     } else {
-        res.sendStatus(404).end('Not Found');
+        res.sendStatus(404);
     }
 });
 
@@ -59,7 +59,7 @@ app.get('/pizzas/suggestions', function (req, res) {
         let suggestions = team_suggestions.get(teamname);
         res.status(200).end(JSON.stringify(suggestions));
     } else {
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 });
 
@@ -73,7 +73,7 @@ app.get('/teamdata', function (req, res) {
     if (teamname != undefined && teams.has(teamname)) {
         res.status(200).end(JSON.stringify(teams.get(teamname)));
     } else {
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 })
 
@@ -95,7 +95,7 @@ app.post('/sessioncreate/', function (req, res) {
         res.status(200).end(JSON.stringify({ teamname: teamname }));
     } else {
         console.log('Creating Team: Failure because of undefined teamname!');
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 });
 
@@ -119,7 +119,7 @@ app.post('/teams/teamsize/', function (req, res) {
         res.status(200).end(JSON.stringify({ teamname: teamname, data: data }));
     } else {
         console.log('Update team size failed');
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 });
 
@@ -137,7 +137,7 @@ app.post('/pizzas/suggestions', function (req, res) {
         res.end(JSON.stringify(suggestion));
     } else {
         console.log('Failed to add suggestion');
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 });
 
@@ -152,7 +152,7 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
         res.sendStatus(200);
     } else {
         console.log('Update voting failed');
-        res.sendStatus(400).end('Bad request');
+        res.sendStatus(400);
     }
 });
 
