@@ -1,3 +1,11 @@
+/*
+* Simple Pizza Calculator
+* ------------------------
+* Author: Sandro Speth
+* Author: Matthias Hermann
+* Author: Heiko Geppert
+*/
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
