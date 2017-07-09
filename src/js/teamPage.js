@@ -326,7 +326,13 @@ function createPizzaBox(ingredientsLeft, ingredientsRight){
 }
 
 function showOrderView(){
-    const suggestions = getAllSuggestions();
+    let suggestions = getAllSuggestions();
+    let amount = getAmount() * 2;
+    suggestions.sort(function (a, b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0); });
+    suggestions = suggestions.filter((element, index) => {
+        return index < amount;
+    })
+
     const boxes = []
     let $pageContent = $('<div>');
 
