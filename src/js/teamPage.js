@@ -150,35 +150,6 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
     return $panelColumn;
 }
 
-window.addEventListener('load', () => {
-    updateTeamname();
-
-    // multiplied by two, because here we work with half pizzas
-    amount = getAmount() * 2;
-    counter = 0;
-
-    teamdata = getTeamdata();
-    document.getElementById("count").value = teamdata.teamsize.number;
-
-    if (teamdata.teamsize.type != null){
-        document.getElementById("type").value = teamdata.teamsize.type;
-    }
-    
-    suggestions = getAllSuggestions();
-    suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
-    suggestions.forEach(function(element) {
-
-        success = false;
-        if (counter < amount) {
-            success = true;
-        }
-        counter++;
-
-        $('#panelContainer')
-            .append(generateSuggestionPanel(element.id, "Vorschlag " + element.id, element.vote, success, element.ingredients));
-    });
-})
-
 function getAmount(){
     let amount;
     $.ajax({
@@ -189,7 +160,7 @@ function getAmount(){
         method: "GET",
         async: false
     })
-    return amount.amount
+    return (amount)? amount.amount : 0;
 }
 
 function getTeamdata(){
@@ -204,3 +175,30 @@ function getTeamdata(){
     })
     return data
 }
+
+window.addEventListener('load', () => {
+    updateTeamname();
+
+    // multiplied by two, because here we work with half pizzas
+    amount = getAmount() * 2;
+
+    teamdata = getTeamdata();
+    document.getElementById("count").value = teamdata.teamsize.number;
+
+    if (teamdata.teamsize.type != null){
+        document.getElementById("type").value = teamdata.teamsize.type;
+    }
+
+    suggestions = getAllSuggestions() || [];
+    suggestions.sort(function(a,b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0);} );
+    suggestions.forEach(function(element, index) {
+
+        success = false;
+        if (index < amount) {
+            success = true;
+        }
+
+        $('#panelContainer')
+            .append(generateSuggestionPanel(element.id, "Vorschlag " + element.id, element.vote, success, element.ingredients));
+    });
+});
