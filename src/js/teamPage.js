@@ -224,24 +224,55 @@ function getTemplates(){
     return templates
 }
 
+function post(event){
+    templates = getTemplates();
+    id = event.target.id.substring(4,5);
+    $.ajax({
+        url: '/pizzas/suggestions',
+        method: "POST",
+        data: {
+            teamname: getTeamname(),
+            ingredients: templates[id].ingredients
+        },
+        success: () => {
+            console.log("Your ingredients have been proposed.")
+            window.location.reload(true);
+        }
+    })
+
+    console.log(event.target);
+    
+}
+
 function showTemplates() {
 
     templates = getTemplates();
     
     const buttonConcat = $('<div></div>')
-
+    
     templates.forEach(function(element, index) {
-        const btn = $('<button>/button>')
+
+        const btn = $('<button id="btn-' + index + '">/button>')
             .attr('type', 'button')
             .addClass('btn btn-success btn-xs')
             .text(element.name)
-            .click() //TODO imlement
-        buttonConcat.append(btn);
+
+        const btnPara = $('<p></p>')
+        btnPara.append(btn);
+        buttonConcat.append(btnPara);
     });
+
+    var buttonsAsString = $(buttonConcat).prop('outerHTML');
 
     swal({
         title: "Vorlagen",
-        text: "A custom <span style=\"color: #F8BB86\">html</span> message.",
-        html: true
+        text: buttonsAsString,
+        showCancelButton: true,
+        showConfirmButton: false,
+        html: buttonsAsString
+    });
+    
+    templates.forEach(function(element, index) {
+        document.getElementById("btn-"+index).addEventListener("click", post);
     });
 }
