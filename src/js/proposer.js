@@ -51,6 +51,8 @@ function submitProposal(){
     if(proposedIngredients.length > 4){
         sweetAlert("Fehler", "Bitte wähle maximal 4 Zutaten aus!", "error");
         return;
+    } else if (proposedIngredients.length === 0){
+        proposedIngredients.push('Margherita')
     }
 
     $.ajax({
