@@ -56,18 +56,27 @@ function vote(value, id){
 }
 
 function voteHandler(event){
+    const storage = window.localStorage;
     const $eventTarget = event.target;
     const suggestionID = $(event.target).parent().parent().parent().parent().parent().parent().parent().attr('suggestion-id');
     if($($eventTarget).hasClass('btn-success')
-            && window.localStorage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'positive'){
+            && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'positive'){
         //Send & save positive vote
         vote(1, suggestionID);
-        window.localStorage.setItem('voted_for_suggestion_id_' + suggestionID, 'positive');
+        if(storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'negative'){
+            storage.setItem('voted_for_suggestion_id_' + suggestionID, 'neutral');
+        } else {
+            storage.setItem('voted_for_suggestion_id_' + suggestionID, 'positive');
+        }
     } else if($($eventTarget).hasClass('btn-danger')
-            && window.localStorage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'negative'){
+            && storage.getItem('voted_for_suggestion_id_' + suggestionID) !== 'negative'){
         //Send & save negative vote
         vote(-1, suggestionID);
-        window.localStorage.setItem('voted_for_suggestion_id_' + suggestionID, 'negative');
+        if(storage.getItem('voted_for_suggestion_id_' + suggestionID) === 'positive'){
+            storage.setItem('voted_for_suggestion_id_' + suggestionID, 'neutral');
+        } else {
+            storage.setItem('voted_for_suggestion_id_' + suggestionID, 'negative');
+        }
     }
     window.location.reload(true);
 }
