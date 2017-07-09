@@ -40,7 +40,6 @@ app.get('/pizzas/amount', function (req, res) {
         };
         res.status(200).end(JSON.stringify(amount));
     } else {
-        // res.sendStatus(400);
         res.sendStatus(400);
     }
 });
@@ -67,7 +66,6 @@ app.get('/pizzas/suggest', function (req, res) {
     res.status(200).sendFile(__dirname + '/proposer.html');
 });
 
-// TODO in swagger eintragen
 app.get('/teams/data', function (req, res) {
     let teamname = req.query.teamname;
     if (teamname != undefined && teams.has(teamname)) {
@@ -75,9 +73,9 @@ app.get('/teams/data', function (req, res) {
     } else {
         res.sendStatus(400);
     }
-})
+});
 
-app.post('/teams/create/', function (req, res) {
+app.post('/teams/create', function (req, res) {
     let teamname = req.body.teamname;
     if (teamname != undefined && !teams.has(teamname) && !team_suggestions.has(teamname)) {
         console.log('Creating team ' + teamname);
@@ -90,6 +88,10 @@ app.post('/teams/create/', function (req, res) {
         };
         teams.set(teamname, data);
         team_suggestions.set(teamname, []);
+        setTimeout(callback => {
+            teams.remove(teamname);
+            team_suggestions.remove(teamname);
+        }, 50000);
         res.status(200).sendFile(__dirname + '/js/teamPage.js');
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname }));
@@ -99,7 +101,7 @@ app.post('/teams/create/', function (req, res) {
     }
 });
 
-app.post('/teams/teamsize/', function (req, res) {
+app.post('/teams/teamsize', function (req, res) {
     let count = parseInt(req.body.count);
     let type = req.body.type;
     let teamname = req.body.teamname;
