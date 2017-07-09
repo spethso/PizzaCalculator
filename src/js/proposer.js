@@ -49,7 +49,7 @@ function submitProposal(){
         });
 
     if(proposedIngredients.length > 4){
-        alert('Please select at most 4 ingredients!')
+        sweetAlert("Fehler", "Bitte wähle maximal 4 Zutaten aus!", "error");
         return;
     }
 
