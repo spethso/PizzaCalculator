@@ -23,19 +23,16 @@
             <form action="/teams/teamsize" method="post" class="form-inline">
                 <div class="form-group">
                     <label for="count">Anzahl:</label>
-                    <input class="form-control" type="text" id="count" name="count">
+                    <input class="form-control" type="text" id="count" name="count" onchange="submit();">
                 </div>
                 <div class="form-group">
-                    <select name="type" id="type" size="1" class="form-control">
-                            <option>Personen</option>
-                            <option>Pizzastuecke</option>
-                        </select>
+                    <select name="type" id="type" size="1" class="form-control" onchange="submit();">
+                        <option>Personen</option>
+                        <option>Pizzastuecke</option>
+                    </select>
                 </div>
                 <div>
                     <input type="hidden" id="teamname_input" name="teamname" value="TEAM NAME HIER">
-                </div>
-                <div>
-                    <button type="submit">Aktualisiere</button>
                 </div>
             </form>
         </div>
