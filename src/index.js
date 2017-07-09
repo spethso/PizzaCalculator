@@ -100,7 +100,7 @@ app.post('/teams/create', function (req, res) {
         res.redirect(303, '/teams/?teamname=' + teamname);
     } else {
         console.log('Creating Team: Failure because of undefined teamname!');
-        res.status(420);
+        res.status(420).send('Team already exists');
     }
 });
 
