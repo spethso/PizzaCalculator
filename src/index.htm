@@ -12,6 +12,7 @@
   <!-- Bootstrap theme -->
   <link rel="stylesheet" href="/css/bootstrap-theme.css">
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="/js/redirect.js"></script>
 
 </head>
 
@@ -24,11 +25,19 @@
   <div class="container text-center">
     <form action="/sessioncreate" method="post" class="form-inline">
       <div class="form-group">
-        <label for="name">Team name:</label>
-        <input type="text" id="name" name="teamname" class="form-control">
+        <label for="createTeamName">Team name:</label>
+        <input type="text" id="createTeamName" name="teamname" class="form-control">
         <button type="submit" class="btn btn-lg btn-primary">Create Team</button>
       </div>
     </form>
+
+    <div class="form-group">
+      <label for="goToTeam">Go to page for team:</label>
+      <input type="text" id="goToTeam" name="teamname" class="form-control">
+      <button onclick='goToTeamPage(this)' class="btn btn-lg btn-primary">Go to team page</button>
+    </div>
+
+
   </div>
 </body>
 
