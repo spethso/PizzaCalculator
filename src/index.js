@@ -27,11 +27,20 @@ fs.readdirSync(dirname + '/src/js').forEach(file => {
 });
 
 // build api endpoint for getting bootstrap files
-fs.readdirSync(dirname + '/node_modules/bootstrap/dist/css').forEach(file => {
-    app.get('/css/' + file, function (req, res) {
-        res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/css/' + file);
+fs.readdirSync(dirname + '/node_modules/bootstrap/dist').forEach(folder => {
+    fs.readdirSync(dirname + '/node_modules/bootstrap/dist/' + folder).forEach(file => {
+        app.get('/bootstrap/' + folder + '/' + file, function (req, res) {
+            res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/' + folder + '/' + file);
+        })
     });
 });
+
+// // build api endpoint for getting bootstrap files
+// fs.readdirSync(dirname + '/node_modules/bootstrap/dist/css').forEach(file => {
+//     app.get('/css/' + file, function (req, res) {
+//         res.status(200).sendFile(dirname + '/node_modules/bootstrap/dist/css/' + file);
+//     });
+// });
 
 // build api endpoint for getting sweetalert files
 fs.readdirSync(dirname + '/node_modules/sweetalert/dist').forEach(file => {
