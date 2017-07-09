@@ -289,3 +289,38 @@ function showTemplates() {
         document.getElementById("btn-"+index).addEventListener("click", post);
     });
 }
+
+function createPizzaBox(ingredientsLeft, ingredientsRight){
+    let leftSideText = ingredientsLeft.ingredients
+        .reduce((acc, val) => {
+            return acc + val + "<br>"
+        }, "")
+        .slice(0, -4);
+    let rightSideText = ingredientsRight.ingredients
+        .reduce((acc, val) => {
+            return acc + val + "<br>"
+        }, "")
+        .slice(0, -4);
+
+    let $leftBox = $('<div>')
+        .css('border-width', '5px')
+        .css('border-color', 'black')
+        .css('border-style', 'solid')
+        .css('float', 'left')
+        .css('padding', '5%')
+        .css('width', '50%')
+        .html(leftSideText);
+    let $rightBox = $('<div>')
+        .css('border-width', '5px')
+        .css('border-color', 'black')
+        .css('border-style', 'solid')
+        .css('float', 'right')
+        .css('padding', '5%')
+        .css('width', '50%')
+        .html(rightSideText);
+    return $('<div>')
+        .addClass('row')
+        .css('margin', '5%')
+        .append($leftBox)
+        .append($rightBox)
+}
