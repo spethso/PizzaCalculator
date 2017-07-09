@@ -20,7 +20,7 @@ paths:
             type: file
   /node_modules/bootstrap/dist/css/filename:
     get:
-      summary: GET for every file in /bootstrap folder
+      summary: GET for every file in /bootstrap/dist/css folder
       consumes:
         - application/json
       parameters: []
@@ -32,17 +32,64 @@ paths:
           description: file resource
           schema:
             type: file
-  /teams:
+  /node_modules/bootstrap/dist/js/filename:
     get:
-      summary: Show team page
+      summary: GET for every file in /bootstrap/dist/js folder
+      consumes:
+        - application/json
       parameters: []
       tags:
-        - Team page
+        - bootstrap
+        - js
       responses:
         '200':
           description: file resource
           schema:
             type: file
+  /teams:
+    get:
+      summary: Show team page
+      parameters: []
+      tags:
+        - Teams
+      responses:
+        '200':
+          description: file resource
+          schema:
+            type: file
+  /pizzas/templates:
+    get:
+      summary: Get all templates saved in file
+      parameters: []
+      tags:
+        - Pizza
+        - Template
+      responses:
+        '200':
+          description: Array of available templates
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/template'
+        '404':
+          description: Empty body
+    post:
+      summary: Post a template
+      parameters:
+        - name: template
+          in: body
+          description: Template
+          required: true
+          schema:
+            $ref: '#/definitions/template'
+      tags:
+        - Pizzas
+        - Template
+      responses:
+        '200':
+          description: Empty body if successfull
+        '420':
+          description: Empty body if failed
   /pizzas/amount:
     get:
       summary: Get amout of pizzas
@@ -61,8 +108,8 @@ paths:
           description: Amount of pizza
           schema:
             $ref: '#/definitions/amount'
-        '400':
-          description: Empty body
+        '303':
+          description: Redirect to main page
   /pizzas/ingredients:
     get:
       summary: Array of available ingredients
@@ -77,8 +124,6 @@ paths:
             type: array
             items:
               type: string
-        '404':
-          description: Empty body
   /pizzas/suggestions:
     get:
       summary: Get all team suggestions
@@ -98,8 +143,8 @@ paths:
           description: Suggestions of a team
           schema:
             $ref: '#/definitions/suggestion'
-        '404':
-          description: Empty body
+        '303':
+          description: Redirect to main page
     post:
       summary: Add suggestion for a team
       parameters:
@@ -116,22 +161,27 @@ paths:
           description: Suggestion
           schema:
             $ref: '#/definitions/suggestion'
-        '400':
-          description: Empty body
-  /pizzas/suggest:
+        '303':
+          description: Redirect to main page
+  /teams/data/:
     get:
-      summary: Send proposer file
-      consumes:
-        - application/json
-      parameters: []
+      summary: Get team data
+      parameters:
+        - name: teamname
+          in: query
+          description: Teamname
+          required: true
+          type: string
       tags:
-        - Pizzas
+        - Teams
       responses:
         '200':
-          description: Proposer file
+          description: Get team data
           schema:
-            type: file
-  /sessioncreate:
+            $ref: '#/definitions/teamData'
+        '303':
+          description: Redirect to main page
+  /teams/create:
     post:
       summary: Set input field
       parameters:
@@ -141,14 +191,18 @@ paths:
           required: true
           schema:
             type: string
+      tags:
+        - Teams
       responses:
         '200':
           description: Proposer file
           schema:
             type: file
-        '400':
-          description: Empty body
-  /teams/teamsize/:
+        '420':
+          description: HTML Code
+          schema:
+            type: string
+  /teams/teamsize:
     post:
       summary: Set teamsize
       parameters:
@@ -160,11 +214,12 @@ paths:
             $ref: '#/definitions/teamsizeParam'
       tags:
         - Pizzas
+        - Teams
       responses:
         '302':
           description: Redirect to subpage
-        '400':
-          description: Empty body
+        '303':
+          description: Redirect to main page
   /pizzas/suggestions/vote:
     post:
       summary: Vote a suggestion
@@ -176,8 +231,8 @@ paths:
       responses:
         '200':
           description: Empty body
-        '400':
-          description: Empty body
+        '303':
+          description: Redirect to main page
 definitions:
   amount:
     type: object
@@ -213,3 +268,26 @@ definitions:
         type: number
       type:
         type: string
+  teamData:
+    type: object
+    properties:
+      teamsize:
+        $ref: '#/definitions/teamsize'
+      count:
+        type: number
+  teamsize:
+    type: object
+    properties:
+      number:
+        type: number
+      type:
+        type: string
+  template:
+    type: object
+    properties:
+      name:
+        type: string
+      ingredients:
+        type: array
+        items:
+          type: string

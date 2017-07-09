@@ -29,7 +29,7 @@
     },
     "/node_modules/bootstrap/dist/css/filename": {
       "get": {
-        "summary": "GET for every file in /bootstrap folder",
+        "summary": "GET for every file in /bootstrap/dist/css folder",
         "consumes": [
           "application/json"
         ],
@@ -48,12 +48,16 @@
         }
       }
     },
-    "/teams": {
+    "/node_modules/bootstrap/dist/js/filename": {
       "get": {
-        "summary": "Show team page",
+        "summary": "GET for every file in /bootstrap/dist/js folder",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [],
         "tags": [
-          "Team page"
+          "bootstrap",
+          "js"
         ],
         "responses": {
           "200": {
@@ -61,6 +65,73 @@
             "schema": {
               "type": "file"
             }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "summary": "Show team page",
+        "parameters": [],
+        "tags": [
+          "Teams"
+        ],
+        "responses": {
+          "200": {
+            "description": "file resource",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/pizzas/templates": {
+      "get": {
+        "summary": "Get all templates saved in file",
+        "parameters": [],
+        "tags": [
+          "Pizza",
+          "Template"
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of available templates",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/template"
+              }
+            }
+          },
+          "404": {
+            "description": "Empty body"
+          }
+        }
+      },
+      "post": {
+        "summary": "Post a template",
+        "parameters": [
+          {
+            "name": "template",
+            "in": "body",
+            "description": "Template",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/template"
+            }
+          }
+        ],
+        "tags": [
+          "Pizzas",
+          "Template"
+        ],
+        "responses": {
+          "200": {
+            "description": "Empty body if successfull"
+          },
+          "420": {
+            "description": "Empty body if failed"
           }
         }
       }
@@ -90,8 +161,8 @@
               "$ref": "#/definitions/amount"
             }
           },
-          "400": {
-            "description": "Empty body"
+          "303": {
+            "description": "Redirect to main page"
           }
         }
       }
@@ -113,9 +184,6 @@
                 "type": "string"
               }
             }
-          },
-          "404": {
-            "description": "Empty body"
           }
         }
       }
@@ -146,8 +214,8 @@
               "$ref": "#/definitions/suggestion"
             }
           },
-          "404": {
-            "description": "Empty body"
+          "303": {
+            "description": "Redirect to main page"
           }
         }
       },
@@ -174,33 +242,41 @@
               "$ref": "#/definitions/suggestion"
             }
           },
-          "400": {
-            "description": "Empty body"
+          "303": {
+            "description": "Redirect to main page"
           }
         }
       }
     },
-    "/pizzas/suggest": {
+    "/teams/data/": {
       "get": {
-        "summary": "Send proposer file",
-        "consumes": [
-          "application/json"
+        "summary": "Get team data",
+        "parameters": [
+          {
+            "name": "teamname",
+            "in": "query",
+            "description": "Teamname",
+            "required": true,
+            "type": "string"
+          }
         ],
-        "parameters": [],
         "tags": [
-          "Pizzas"
+          "Teams"
         ],
         "responses": {
           "200": {
-            "description": "Proposer file",
+            "description": "Get team data",
             "schema": {
-              "type": "file"
+              "$ref": "#/definitions/teamData"
             }
+          },
+          "303": {
+            "description": "Redirect to main page"
           }
         }
       }
     },
-    "/sessioncreate": {
+    "/teams/create": {
       "post": {
         "summary": "Set input field",
         "parameters": [
@@ -214,6 +290,9 @@
             }
           }
         ],
+        "tags": [
+          "Teams"
+        ],
         "responses": {
           "200": {
             "description": "Proposer file",
@@ -221,13 +300,16 @@
               "type": "file"
             }
           },
-          "400": {
-            "description": "Empty body"
+          "420": {
+            "description": "HTML Code",
+            "schema": {
+              "type": "string"
+            }
           }
         }
       }
     },
-    "/teams/teamsize/": {
+    "/teams/teamsize": {
       "post": {
         "summary": "Set teamsize",
         "parameters": [
@@ -242,14 +324,15 @@
           }
         ],
         "tags": [
-          "Pizzas"
+          "Pizzas",
+          "Teams"
         ],
         "responses": {
           "302": {
             "description": "Redirect to subpage"
           },
-          "400": {
-            "description": "Empty body"
+          "303": {
+            "description": "Redirect to main page"
           }
         }
       }
@@ -267,8 +350,8 @@
           "200": {
             "description": "Empty body"
           },
-          "400": {
-            "description": "Empty body"
+          "303": {
+            "description": "Redirect to main page"
           }
         }
       }
@@ -325,6 +408,42 @@
         },
         "type": {
           "type": "string"
+        }
+      }
+    },
+    "teamData": {
+      "type": "object",
+      "properties": {
+        "teamsize": {
+          "$ref": "#/definitions/teamsize"
+        },
+        "count": {
+          "type": "number"
+        }
+      }
+    },
+    "teamsize": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "template": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
