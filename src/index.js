@@ -193,6 +193,17 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
     }
 });
 
+app.post('/pizzas/templates', function (req, res) {
+    let template = req.body.template;
+    if (template != undefined) {
+        templates.push(template);
+        fs.writeFileSync(__dirname + '/data/templates.json', templates, 'utf8');
+        res.sendStatus(200);
+    } else {
+        res.sendStatus(420);
+    }
+});
+
 function computeNumberOfPizzas(count, type) {
     if (type == 'Personen') {
         let number = count * 4;
@@ -203,18 +214,6 @@ function computeNumberOfPizzas(count, type) {
         return 0;
     }
 };
-
-function saveToFile(data, filename = "tfmap.log", exitOnWrite = false) {
-    let folderName = "results";
-    if (!fs.existsSync(folderName)) {
-        fs.mkdirSync(folderName);
-    }
-    fs.writeFileSync('results/' + filename, data);
-    console.log("The file was saved!");
-    if (exitOnWrite) {
-        process.exit(0);
-    }
-}
 
 var server = app.listen(8081, function () {
     var host = server.address().address;
