@@ -92,7 +92,7 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
     const $h4 = $('<h4></h4>')
     const $panelHeadingText = $('<div></div>')
         .addClass('col-sm-6');
-    const $panelHeadingVote = $('<div></div>')
+    const $panelHeadingVote = $('<div align="right"></div>')
         .addClass('col-sm-6')
     const $elementGroup = $('<div></div>')
         .addClass('element-group')
