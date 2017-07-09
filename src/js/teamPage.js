@@ -188,20 +188,20 @@ window.addEventListener('load', () => {
     updateTeamname();
 
     // multiplied by two, because here we work with half pizzas
-    amount = getAmount() * 2;
+    let amount = getAmount() * 2;
 
-    teamdata = getTeamdata();
+    let teamdata = getTeamdata();
     document.getElementById("count").value = teamdata.teamsize.number;
 
     if (teamdata.teamsize.type != null) {
         document.getElementById("type").value = teamdata.teamsize.type;
     }
 
-    suggestions = getAllSuggestions() || [];
+    let suggestions = getAllSuggestions() || [];
     suggestions.sort(function (a, b) { return (a.vote > b.vote) ? -1 : ((a.vote < b.vote) ? 1 : 0); });
     suggestions.forEach(function (element, index) {
 
-        success = false;
+        let success = false;
         if (index < amount) {
             success = true;
         }
@@ -225,8 +225,8 @@ function getTemplates(){
 }
 
 function post(event){
-    templates = getTemplates();
-    id = event.target.id.substring(4,5);
+    let templates = getTemplates();
+    let id = event.target.id.substring(4,5);
     $.ajax({
         url: '/pizzas/suggestions',
         method: "POST",
