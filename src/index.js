@@ -17,6 +17,7 @@ const timeoutInMS = 28800000;
 
 var teams = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
+ingredients.sort();
 var team_suggestions = new HashMap();
 var templates = JSON.parse(fs.readFileSync(__dirname + '/data/templates.json', 'utf8'));
 
@@ -49,7 +50,6 @@ app.get('/', function (req, res) {
 
 app.get('/teams', function (req, res) {
     let teamname = req.query.teamname;
-    console.log(teamname);
     if (teamname != undefined && teams.has(teamname)) {
         res.status(200).sendFile(__dirname + "/teamPage.html");
     } else {
@@ -143,7 +143,6 @@ app.post('/teams/teamsize', function (req, res) {
             },
             pizza_count: pizza_count
         };
-        console.log(data);
         teams.set(teamname, data);
         res.redirect(302, '/teams/?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname, data: data }));
