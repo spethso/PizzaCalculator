@@ -10,38 +10,15 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const i18n = require('i18n');
 app.use(bodyParser.urlencoded({ extended: true }));
 const HashMap = require('hashmap');
 const dirname = fs.realpathSync('./');
 const timeoutInMS = 28800000;
 
-// Setup i18n translation
-i18n.configure({
-    locales: ['en', 'de', 'ch'],
-    directory: __dirname + '/locales',
-    register: global
-});
-i18n.setLocale('de'); // Standard language is german
-
 var teams = new HashMap();
 var team_suggestions = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
 var templates = JSON.parse(fs.readFileSync(__dirname + '/data/templates.json', 'utf8'));
-translate();
-
-function translate() {
-    for(let n = 0; n < ingredients.length; n++) {
-        ingredients[n] = __(ingredients[n]);
-    }
-    ingredients.sort();
-    templates.forEach(function (template) {
-        let ing = template.ingredients;
-        for (let n = 0; n < ing.length; n++) {
-            ing[n] = __(ing[n]);
-        }
-    });
-};
 
 // build api endpoint for getting js files
 fs.readdirSync(dirname + '/src/js').forEach(file => {
@@ -79,18 +56,6 @@ app.get('/teams', function (req, res) {
     }
 
 });
-
-app.post('/languages', function (req, res) {
-    var teamname = req.body.teamname;
-    var language = req.body.language;
-    if (teamname != undefined && language == 'de' || language == 'en' || language == 'ch') {
-        i18n.setLocale(language);
-        translate();
-        res.redirect(302, '/teams/?teamname=' + teamname);
-    } else {
-        res.sendStatus(400);
-    }
-})
 
 app.get('/pizzas/amount', function (req, res) {
     let teamname = req.query.teamname;
