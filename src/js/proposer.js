@@ -13,7 +13,11 @@ function getPossibleIngredients(){
         },
         async: false
     })
-    return responseJSON.sort();
+    return responseJSON.sort((a, b) => {
+         if (a.toLowerCase() < b.toLowerCase()) return -1;
+         if (a.toLowerCase() > b.toLowerCase()) return 1;
+         return 0;
+    });
 }
 
 function getCheckboxForIngredient(ingredient){
