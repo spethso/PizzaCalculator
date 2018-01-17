@@ -9,6 +9,8 @@ FIUS Pizza Calculator
 
 ## Setup
 
+> git clone git@github.com:mee4895/PizzaCalculator.git
+> cd PizzaCalculator
 > npm install
 
 ## Start
