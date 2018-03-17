@@ -52,7 +52,7 @@ app.get('/teams', function (req, res) {
     if (teamname != undefined && teams.has(teamname)) {
         res.status(200).sendFile(__dirname + "/teamPage.html");
     } else {
-        res.redirect(302, '/');
+        res.redirect(302, './');
     }
 
 });
@@ -65,7 +65,7 @@ app.get('/pizzas/amount', function (req, res) {
         };
         res.status(200).end(JSON.stringify(amount));
     } else {
-        res.redirect(303, '/');
+        res.redirect(303, '../');
     }
 });
 
@@ -83,7 +83,7 @@ app.get('/pizzas/suggestions', function (req, res) {
         let suggestions = team_suggestions.get(teamname);
         res.status(200).end(JSON.stringify(suggestions));
     } else {
-        res.redirect(303, '/');
+        res.redirect(303, '../');
     }
 });
 
@@ -92,7 +92,7 @@ app.get('/teams/data', function (req, res) {
     if (teamname != undefined && teams.has(teamname)) {
         res.status(200).end(JSON.stringify(teams.get(teamname)));
     } else {
-        res.redirect(303, '/');
+        res.redirect(303, '../');
     }
 });
 
@@ -114,7 +114,7 @@ app.post('/teams/create', function (req, res) {
             team_suggestions.remove(teamname);
         }, timeoutInMS);
         res.status(200).sendFile(__dirname + '/js/teamPage.js');
-        res.redirect(303, '/teams/?teamname=' + teamname);
+        res.redirect(303, '../teams?teamname=' + teamname);
     } else {
         console.log('Creating Team: Failure because of undefined teamname!');
         res.status(420).send('<html><body>' +
@@ -143,11 +143,11 @@ app.post('/teams/teamsize', function (req, res) {
             pizza_count: pizza_count
         };
         teams.set(teamname, data);
-        res.redirect(302, '/teams/?teamname=' + teamname);
+        res.redirect(302, '../teams?teamname=' + teamname);
         res.status(200).end(JSON.stringify({ teamname: teamname, data: data }));
     } else {
         console.log('Update team size failed');
-        res.redirect(303, '/');
+        res.redirect(303, '../');
     }
 });
 
@@ -165,7 +165,7 @@ app.post('/pizzas/suggestions', function (req, res) {
         res.end(JSON.stringify(suggestion));
     } else {
         console.log('Failed to add suggestion');
-        res.redirect(303, '/');
+        res.redirect(303, '../');
     }
 });
 
@@ -180,7 +180,7 @@ app.post('/pizzas/suggestions/vote', function (req, res) {
         res.sendStatus(200);
     } else {
         console.log('Update voting failed');
-        res.redirect(303, '/');
+        res.redirect(303, '../../');
     }
 });
 
