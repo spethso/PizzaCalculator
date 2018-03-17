@@ -27,7 +27,7 @@
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.14.11",
     "sweetalert2": "^6.6.5"
   }
 }
