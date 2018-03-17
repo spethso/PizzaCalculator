@@ -206,7 +206,21 @@ function computeNumberOfPizzas(count, type) {
     }
 };
 
-var server = app.listen(8081, function () {
+let port = 8081
+
+if(process.env.PORT != null) {
+  let envPort = parseInt(process.env.PORT);
+  if(! (isNaN(envPort) || envPort < 1 || envPort > 65535)) {
+    console.log("Found valid environment variable PORT. Setting port to %i", envPort);
+    port = envPort;
+  } else {
+    console.log("The value \"%s\" is not a valid port. Falling back to 8081.", process.env.PORT);
+  }
+} else {
+  console.log("Environment variable PORT not set. Using default port 8081.");
+}
+
+var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
     console.log("REST server listening at http://%s:%s", host, port);
