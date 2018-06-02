@@ -28,7 +28,7 @@ function updateTeamname() {
 function getAllSuggestions() {
     let suggestions;
     $.ajax({
-        url: '/pizzas/suggestions/?teamname=' + getTeamname(),
+        url: './pizzas/suggestions/?teamname=' + getTeamname(),
         success: (res) => {
             suggestions = JSON.parse(res);
         },
@@ -45,7 +45,7 @@ function vote(value, id) {
         vote: value
     };
     $.ajax({
-        url: '/pizzas/suggestions/vote',
+        url: './pizzas/suggestions/vote',
         data: voteObject,
         success: () => {
             console.log("Your vote has been sent to the server.")
@@ -161,7 +161,7 @@ function generateSuggestionPanel(id, headingText, voteCount, success, ingredient
 function getAmount() {
     let amount;
     $.ajax({
-        url: '/pizzas/amount/?teamname=' + getTeamname(),
+        url: './pizzas/amount/?teamname=' + getTeamname(),
         success: (res) => {
             amount = JSON.parse(res);
         },
@@ -174,7 +174,7 @@ function getAmount() {
 function getTeamdata() {
     let data;
     $.ajax({
-        url: '/teams/data/?teamname=' + getTeamname(),
+        url: './teams/data/?teamname=' + getTeamname(),
         success: (res) => {
             data = JSON.parse(res);
         },
@@ -214,7 +214,7 @@ window.addEventListener('load', () => {
 function getTemplates(){
     let templates;
     $.ajax({
-        url: '/pizzas/templates/?teamname=' + getTeamname(),
+        url: './pizzas/templates/?teamname=' + getTeamname(),
         success: (res) => {
             templates = JSON.parse(res);
         },
@@ -228,7 +228,7 @@ function post(event){
     let templates = getTemplates();
     let id = event.target.id.substring(4,5);
     $.ajax({
-        url: '/pizzas/suggestions',
+        url: './pizzas/suggestions',
         method: "POST",
         data: {
             teamname: getTeamname(),

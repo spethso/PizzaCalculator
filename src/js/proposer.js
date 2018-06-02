@@ -7,7 +7,7 @@ function getPossibleIngredients(){
     let responseJSON;
 
     $.ajax({
-        url: '/pizzas/ingredients',
+        url: './pizzas/ingredients',
         success: (data) => {
             responseJSON = JSON.parse(data)
         },
@@ -83,7 +83,7 @@ function submitProposal(){
 
 function postPizzaSuggestion(proposedIngredients){
     $.ajax({
-        url: '/pizzas/suggestions',
+        url: './pizzas/suggestions',
         method: "POST",
         data: {
             teamname: getTeamname(),
