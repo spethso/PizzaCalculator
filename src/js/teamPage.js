@@ -209,6 +209,8 @@ window.addEventListener('load', () => {
         $('#panelContainer')
             .append(generateSuggestionPanel(element.id, "Vorschlag " + element.id, element.vote, success, element.ingredients));
     });
+
+    addGdprFooter();
 });
 
 function getTemplates(){
@@ -288,6 +290,17 @@ function showTemplates() {
     templates.forEach(function(element, index) {
         document.getElementById("btn-"+index).addEventListener("click", post);
     });
+}
+
+function addGdprFooter(){
+    $.ajax({
+        url: './application/gdpr',
+        success: (res) => {
+            $('#gdpr-footer')
+                .html(res)
+        },
+        method: "GET",
+    })
 }
 
 function createPizzaBox(ingredientsLeft, ingredientsRight){
