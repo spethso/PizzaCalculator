@@ -195,6 +195,12 @@ app.post('/pizzas/templates', function (req, res) {
     }
 });
 
+app.get('/application/gdpr', function (req, res) {
+    var footerText = fs.readFileSync(__dirname + '/data/footer.txt', 'utf8');
+
+    res.status(200).end(footerText);
+});
+
 function computeNumberOfPizzas(count, type) {
     if (type == 'Personen') {
         let number = count * 4;
