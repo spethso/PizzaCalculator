@@ -9,7 +9,7 @@ There are two methods of installing and running the FIUS Pizza Calculator: Docke
 ### Running with Docker
 If you have docker installed you can run the FIUS Pizza Calculator (container: `neumantm/pizza-calculator`) like so:
     
-    docker run -p 0.0.0.0:<port>:80 neumantm/pizza-calculator
+    docker run -p 0.0.0.0:<port>:80 -v ~/pizzaData:/app/src/data neumantm/pizza-calculator
 
 This will run the container and publish the app to everybody in the network on the port `<port>`.
 
