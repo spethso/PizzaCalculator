@@ -15,6 +15,26 @@ const HashMap = require('hashmap');
 const dirname = fs.realpathSync('./');
 const timeoutInMS = 28800000;
 
+
+const dataFolder = dirname + '/src/data/'
+const defaultDataFolder = dirname + '/src/data-default/'
+
+const footerFile = 'footer.txt';
+const ingredientsFile = 'ingredients.json';
+const templateFile = 'templates.json';
+
+if(!fs.existsSync(dataFolder + footerFile)) {
+  fs.copyFileSync(defaultDataFolder + footerFile, dataFolder + footerFile);
+}
+
+if(!fs.existsSync(dataFolder + ingredientsFile)) {
+  fs.copyFileSync(defaultDataFolder + ingredientsFile, dataFolder + ingredientsFile);
+}
+
+if(!fs.existsSync(dataFolder + templateFile)) {
+  fs.copyFileSync(defaultDataFolder + templateFile, dataFolder + templateFile);
+}
+
 var teams = new HashMap();
 var team_suggestions = new HashMap();
 var ingredients = JSON.parse(fs.readFileSync(__dirname + '/data/ingredients.json', 'utf8'));
