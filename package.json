@@ -18,16 +18,16 @@
   },
   "homepage": "https://github.com/spethso/PizzaCalculator#readme",
   "dependencies": {
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.3",
     "bootstrap": "^3.3.7",
-    "express": "^4.15.3",
+    "express": "^4.16.3",
     "fs": "0.0.1-security",
     "hashmap": "^2.1.0",
     "i18n": "^0.8.3",
     "jquery": "^3.2.1"
   },
   "devDependencies": {
-    "nodemon": "^1.14.11",
+    "nodemon": "^1.18.3",
     "sweetalert2": "^6.6.5"
   }
 }
