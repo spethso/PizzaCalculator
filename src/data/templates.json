@@ -43,5 +43,14 @@
       "Mais",
       "Speck"
     ]
+  },
+  {
+    "name": "Mozzarella + Ei",
+    "ingredients": [
+      "Ei",
+      "Pepperoni (scharf)",
+      "Mozzarella",
+      "Oliven"
+    ]
   }
 ]
